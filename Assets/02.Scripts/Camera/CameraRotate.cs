@@ -24,7 +24,9 @@ public class CameraRotate : MonoBehaviour
         // Vector3 rotation = transform.eulerAngles;
 
         _accumulationX += mouseX * _rotateSpeed * Time.deltaTime;
-        _accumulationY += mouseY * _rotateSpeed * Time.deltaTime;
+        _accumulationY += -mouseY * _rotateSpeed * Time.deltaTime;
+
+        _accumulationY = Mathf.Clamp(_accumulationY, -90f, 90f);
         // float rotationY = Math.Clamp(transform.eulerAngles.y + _accumulationX, -90f, 90f);
 
         transform.eulerAngles = new Vector3(_accumulationY, _accumulationX, 0);
