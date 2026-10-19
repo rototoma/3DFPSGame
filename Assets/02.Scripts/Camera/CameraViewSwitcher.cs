@@ -1,6 +1,6 @@
 using UnityEngine;
 
-// V 키로 1인칭 -> 3인칭 -> 쿼터뷰 -> 숄더뷰 순서로 전환한다.
+// V 키로 1인칭 -> 3인칭 -> 쿼터뷰 -> 숄더뷰 -> 탑다운 순서로 전환한다.
 [RequireComponent(typeof(CameraFollow))]
 public class CameraViewSwitcher : MonoBehaviour
 {
@@ -29,6 +29,9 @@ public class CameraViewSwitcher : MonoBehaviour
                     _cameraFollow.SetViewMode(CameraViewMode.ShoulderView);
                     break;
                 case CameraViewMode.ShoulderView:
+                    _cameraFollow.SetViewMode(CameraViewMode.TopDown);
+                    break;
+                case CameraViewMode.TopDown:
                     _cameraFollow.SetViewMode(CameraViewMode.FirstPerson);
                     break;
                 default:

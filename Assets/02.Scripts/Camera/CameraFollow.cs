@@ -5,7 +5,8 @@ public enum CameraViewMode
     FirstPerson,
     ThirdPerson,
     QuarterView,
-    ShoulderView
+    ShoulderView,
+    TopDown
 }
 
 public class CameraFollow : MonoBehaviour
@@ -24,6 +25,9 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float _shoulderViewDistance = 2.5f;
     [SerializeField] private float _shoulderViewHeight = 0.8f;
     [SerializeField] private float _shoulderViewOffset = 0.7f;
+
+    [SerializeField] private float _topDownDistance = 12f;
+    [SerializeField] private float _topDownYaw = 0f;
 
     public CameraViewMode ViewMode { get; private set; } = CameraViewMode.FirstPerson;
 
@@ -71,6 +75,14 @@ public class CameraFollow : MonoBehaviour
                 height = _shoulderViewHeight;
                 distance = _shoulderViewDistance;
                 horizontalOffset = _shoulderViewOffset;
+                break;
+            }
+            case CameraViewMode.TopDown:
+            {
+                // 플레이어 바로 위에서 수직으로 내려다본다.
+                transform.rotation = Quaternion.Euler(90f, _topDownYaw, 0f);
+                height = _targetHeight;
+                distance = _topDownDistance;
                 break;
             }
         }

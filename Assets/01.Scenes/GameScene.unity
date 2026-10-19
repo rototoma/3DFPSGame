@@ -542,7 +542,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -647,9 +647,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
   _target: {fileID: 1424342455}
-  _distance: 5
-  _targetHeight: 0.5
   _firstPersonHeight: 0.5
+  _thirdViewDistance: 5
+  _targetHeight: 0.5
+  _quarterViewDistance: 10
+  _quarterViewPitch: 45
+  _quarterViewYaw: 45
+  _shoulderViewDistance: 2.5
+  _shoulderViewHeight: 0.8
+  _shoulderViewOffset: 0.7
+  _topDownDistance: 12
+  _topDownYaw: 0
 --- !u!114 &330585550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,7 +671,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraViewSwitcher
   _switchKey: 118
-  _startInFirstPerson: 0
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
