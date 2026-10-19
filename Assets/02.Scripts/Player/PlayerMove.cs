@@ -17,7 +17,7 @@ public class PlayerMove : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        Vector3 direction = new Vector3(h, 0f, v);
+        Vector3 direction = new Vector3(h, 0, v);
         direction.Normalize();
         direction = transform.TransformDirection(direction); // 로컬 좌표계
 
