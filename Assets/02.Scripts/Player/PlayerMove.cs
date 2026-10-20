@@ -19,7 +19,12 @@ public class PlayerMove : MonoBehaviour
         // GetAxis: 0~1사이로 보정이 들어감. GetAxisRaw: 키를 누르면 즉시, 떼면 즉시 반영
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        _isDashing = Input.GetKey(KeyCode.LeftShift) && PlayerManager.Instance.UseStamina(Time.deltaTime);
+        bool isShiftPressed = Input.GetKey(KeyCode.LeftShift);
+        _isDashing = isShiftPressed && PlayerManager.Instance.PlayerStamina > 0f;
+        if (_isDashing)
+        {
+            PlayerManager.Instance.UseStamina(Time.deltaTime);
+        }
 
         Vector3 direction = new Vector3(h, 0, v);
         direction.Normalize();
