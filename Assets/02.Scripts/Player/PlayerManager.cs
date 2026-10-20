@@ -5,7 +5,8 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
 
-    public float PlayerStamina = 10f;
+    public const float PlayerMaxStamina = 10f;
+    public float PlayerStamina;
 
     private void Awake()
     {
@@ -16,6 +17,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         Instance = this;
+        PlayerStamina = PlayerMaxStamina;
     }
 
     private void OnDestroy()
@@ -28,7 +30,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        PlayerStamina += Time.deltaTime * 0.5f;
+        PlayerStamina = Mathf.Clamp(PlayerStamina + Time.deltaTime * 0.5f, 0f, PlayerMaxStamina);
     }
 
     public bool UseStamina(float amount)

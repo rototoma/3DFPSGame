@@ -49,10 +49,5 @@ public class PlayerMove : MonoBehaviour
         Vector3 velocity = _isDashing ? direction * _runSpeed : direction * _moveSpeed;
         velocity.y = _yVelocity;
         _controller.Move(velocity * Time.deltaTime);
-
-        if (_isDashing)
-        {
-            PlayerManager.Instance.UseStamina(Time.deltaTime);
-        }
     }
 }
