@@ -1,91 +1,58 @@
 using UnityEngine;
 
-// 키보드(WASD)로 이동하고, 질주와 2단 점프에 스태미나를 쓴다.
+[RequireComponent(typeof(CharacterController))]
 public class PlayerMove : MonoBehaviour
 {
-    private const float Gravity = -20f;
-    private float _yVelocity = 0f;
-    private int _jumpCount = 0;
-
+    [SerializeField] private CharacterController _controller;
     [SerializeField] private float _moveSpeed = 7f;
-    [SerializeField] private float _sprintSpeed = 12f;
-    [SerializeField] private float _jumpPower = 10f;
-    [SerializeField] private CharacterController _characterController;
+    [SerializeField] private float _jumpPower = 7f;
+    [SerializeField] private float _runSpeed = 12f;
 
-    [SerializeField] private float _maxStamina = 100f;
-    [SerializeField] private float _stamina = 100f;
-    [SerializeField] private float _sprintCost = 20f; // 1초에 쓰는 양
-    [SerializeField] private float _jumpCost = 20f; // 한 번 뛸 때 쓰는 양
-    [SerializeField] private float _staminaRecovery = 15f; // 1초에 회복하는 양
-
-    public float MaxStamina => _maxStamina;
-    public float Stamina => _stamina;
-
-    private void Awake()
-    {
-        _characterController = GetComponent<CharacterController>();
-        _stamina = _maxStamina;
-    }
+    public float Gravity = -20f; // 중력 가속도
+    private float _yVelocity = 0f; // 위아래 속도. 매 프레임 중력이 쌓인다.
+    private bool _isDashing = false;
+    private int _jumpLimit = 2;
+    private int _jumpCount = 0;
 
     private void Update()
     {
-        // 1. 입력으로 방향을 만들고, 플레이어가 보는 방향 기준으로 바꾼다.
+        // GetAxis: 0~1사이로 보정이 들어감. GetAxisRaw: 키를 누르면 즉시, 떼면 즉시 반영
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
+        _isDashing = Input.GetKey(KeyCode.LeftShift) && PlayerManager.Instance.UseStamina(Time.deltaTime);
 
-        Vector3 direction = new Vector3(h, 0f, v);
+        Vector3 direction = new Vector3(h, 0, v);
         direction.Normalize();
-        direction = transform.TransformDirection(direction);
+        direction = transform.TransformDirection(direction); // 로컬 좌표계
 
-        // 2. 바닥에 내려왔을 때 점프 횟수를 되돌린다.
-        // 점프 직후에는 이전 Move의 isGrounded가 남을 수 있으므로 상승 중에는 리셋하지 않는다.
-        if (_characterController.isGrounded && _yVelocity <= 0f)
+        // 3. 바닥에 서 있으면 떨어지는 속도를 초기화하고 점프횟수도 초기화
+        if (_controller.isGrounded && _yVelocity < 0f)
         {
-            _yVelocity = -1f;
+            _yVelocity = -2f; // 살짝 아래로 눌러 두어야 isGrounded가 계속 true로 유지된다.
             _jumpCount = 0;
         }
-        else
-        {
-            _yVelocity += Gravity * Time.deltaTime;
 
-            // 점프하지 않고 턱에서 떨어져도 공중 점프는 한 번만 남긴다.
-            if (_jumpCount == 0)
+        // 4. 바닥에서 점프 키를 누르면 위로 속도를 준다.
+        if (Input.GetButtonDown("Jump") && _jumpCount < _jumpLimit)
+        {
+            if (PlayerManager.Instance.UseStamina(0.5f))
             {
-                _jumpCount = 1;
+                _yVelocity = _jumpPower;
+                _jumpCount++;
             }
         }
 
-        // 3. 두 번까지 점프한다. 두 점프 모두 스태미나를 쓴다.
-        bool jumped = false;
-        if (Input.GetButtonDown("Jump") && _jumpCount < 2 && _stamina >= _jumpCost)
-        {
-            _yVelocity = _jumpPower;
-            _jumpCount++;
-            _stamina -= _jumpCost;
-            jumped = true;
-        }
+        // 중력을 누적한다.
+        _yVelocity += Gravity * Time.deltaTime;
 
-        // 4. Shift를 누르고 움직일 때만 질주한다.
-        bool wantsSprint = Input.GetButton("Sprint") && direction.sqrMagnitude > 0f;
-        bool isSprinting = wantsSprint && _stamina > 0f;
-        float currentSpeed = _moveSpeed;
-
-        if (isSprinting)
-        {
-            currentSpeed = _sprintSpeed;
-            _stamina -= _sprintCost * Time.deltaTime;
-        }
-        else if (!wantsSprint && !jumped)
-        {
-            _stamina += _staminaRecovery * Time.deltaTime;
-        }
-
-        // 스태미나가 0보다 작아지거나 최댓값을 넘지 않게 한다.
-        _stamina = Mathf.Clamp(_stamina, 0f, _maxStamina);
-
-        // 5. 수평 속도와 수직 속도를 합쳐서 이동한다.
-        Vector3 velocity = direction * currentSpeed;
+        // 수평 속도와 수직 속도를 합쳐서 이동한다.
+        Vector3 velocity = _isDashing ? direction * _runSpeed : direction * _moveSpeed;
         velocity.y = _yVelocity;
-        _characterController.Move(velocity * Time.deltaTime);
+        _controller.Move(velocity * Time.deltaTime);
+
+        if (_isDashing)
+        {
+            PlayerManager.Instance.UseStamina(Time.deltaTime);
+        }
     }
 }
