@@ -12,6 +12,9 @@ public class PlayerGunFire : MonoBehaviour
     [SerializeField] private Transform _originPoint;
     [SerializeField] private ParticleSystem _hitEffectPrefab;
 
+    // [SerializeField] private LayerMask _targetLayers;
+
+
     private void Update()
     {
         // 1. 마우스 왼쪽 버튼 입력 받기
