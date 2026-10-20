@@ -7,15 +7,18 @@ public class PlayerMove : MonoBehaviour
 
     [SerializeField] private float _moveSpeed = 7f;
     [SerializeField] private float _jumpPower = 7f;
+    [SerializeField] private float _runSpeed = 12f;
 
     public float Gravity = -20f; // 중력 가속도
     private float _yVelocity = 0f; // 위아래 속도. 매 프레임 중력이 쌓인다.
+    private bool _isDashing = false;
 
     private void Update()
     {
         // GetAxis: 0~1사이로 보정이 들어감. GetAxisRaw: 키를 누르면 즉시, 떼면 즉시 반영
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
+        _isDashing = Input.GetKey(KeyCode.LeftShift);
 
         Vector3 direction = new Vector3(h, 0, v);
         direction.Normalize();
@@ -37,7 +40,7 @@ public class PlayerMove : MonoBehaviour
         _yVelocity += Gravity * Time.deltaTime;
 
         // 수평 속도와 수직 속도를 합쳐서 이동한다.
-        Vector3 velocity = direction * _moveSpeed;
+        Vector3 velocity = _isDashing ? direction * _runSpeed : direction * _moveSpeed;
         velocity.y = _yVelocity;
         _controller.Move(velocity * Time.deltaTime);
     }
