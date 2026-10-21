@@ -38,7 +38,7 @@ public class PlayerBombFire : MonoBehaviour
     {
         if (_currentBomb >= _maxBombs) return;
 
-        Bomb bomb = Instantiate(_bombPrefab, _firePoint.position, Quaternion.identity);
+        Bomb bomb = Lean.Pool.LeanPool.Spawn(_bombPrefab, _firePoint.position, Quaternion.identity);
         bomb.ParentScript = this;
         _currentBomb++;
 

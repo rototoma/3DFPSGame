@@ -9,11 +9,12 @@ public class Bomb : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        ParticleSystem effect = Instantiate(_explosionEffectPrefab, transform.localPosition, Quaternion.identity);
+        ParticleSystem effect =
+            Lean.Pool.LeanPool.Spawn(_explosionEffectPrefab, transform.localPosition, Quaternion.identity);
         effect.Play();
 
         //Todo: 풀링 적용
-        Destroy(gameObject);
+        Lean.Pool.LeanPool.Despawn(gameObject);
         ParentScript.BombDestroyed();
     }
 }

@@ -47,7 +47,7 @@ public class PlayerGunFire : MonoBehaviour
         bool isHit = Physics.Raycast(ray, out hitInfo, _range);
         if (isHit)
         {
-            ParticleSystem effect = Instantiate(_hitEffectPrefab);
+            ParticleSystem effect = Lean.Pool.LeanPool.Spawn(_hitEffectPrefab);
             effect.transform.position = hitInfo.point;
             effect.transform.forward = hitInfo.normal;
             effect.Play();
