@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 32757898}
   - component: {fileID: 32757901}
   - component: {fileID: 32757900}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 116486276}
   - component: {fileID: 116486278}
   - component: {fileID: 116486277}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Nose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -861,6 +861,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &968894477
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 968894478}
+  m_Layer: 7
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &968894478
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968894477}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.63, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1424342455}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1038962387
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,7 +980,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1149425961}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SunGlasses
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1101,7 +1132,8 @@ GameObject:
   - component: {fileID: 1424342457}
   - component: {fileID: 1424342458}
   - component: {fileID: 1424342459}
-  m_Layer: 0
+  - component: {fileID: 1424342460}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1180,6 +1212,7 @@ Transform:
   m_Children:
   - {fileID: 116486276}
   - {fileID: 1149425961}
+  - {fileID: 968894478}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1424342456
@@ -1255,6 +1288,20 @@ MonoBehaviour:
   _firePoint: {fileID: 0}
   _originPoint: {fileID: 0}
   _hitEffectPrefab: {fileID: 19800002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+--- !u!114 &1424342460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424342451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6464dd086b69a8f498dde9f821d21ff8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerBombFire
+  _firePoint: {fileID: 968894478}
+  _bombPrefab: {fileID: 3353314802549534101, guid: f88f23b2f5df62e44b86849d1d745cbe, type: 3}
 --- !u!1 &1483872009
 GameObject:
   m_ObjectHideFlags: 0
@@ -1490,7 +1537,7 @@ GameObject:
   - component: {fileID: 1563820640}
   - component: {fileID: 1563820643}
   - component: {fileID: 1563820642}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1879,7 +1926,7 @@ GameObject:
   - component: {fileID: 1882240651}
   - component: {fileID: 1882240654}
   - component: {fileID: 1882240653}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
