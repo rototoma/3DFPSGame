@@ -6,9 +6,10 @@ public class PlayerBombFire : MonoBehaviour
     private float _fireCharge = 0f;
     private bool _isCharging = false;
     private float _throwPower = 10f;
+    [SerializeField] private float _chargeMultiplier = 5f;
     [SerializeField] private int _maxBombs = 10;
 
-    public int _currentBomb { private set; get; }
+    private int _currentBomb = 0;
 
     [SerializeField] private Transform _firePoint;
     [SerializeField] private Bomb _bombPrefab;
@@ -39,11 +40,12 @@ public class PlayerBombFire : MonoBehaviour
         if (_currentBomb >= _maxBombs) return;
 
         Bomb bomb = Lean.Pool.LeanPool.Spawn(_bombPrefab, _firePoint.position, Quaternion.identity);
-        bomb.ParentScript = this;
+        bomb.Init(this);
         _currentBomb++;
 
         Rigidbody rigidbody = bomb.GetComponent<Rigidbody>();
-        rigidbody.AddForce(fireCharge * _throwPower * Camera.main.transform.forward, ForceMode.Impulse);
+        rigidbody.AddForce((fireCharge * _chargeMultiplier + _throwPower) * Camera.main.transform.forward,
+            ForceMode.Impulse);
     }
 
     public void BombDestroyed()

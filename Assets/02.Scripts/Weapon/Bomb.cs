@@ -5,7 +5,12 @@ public class Bomb : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _explosionEffectPrefab;
 
-    public PlayerBombFire ParentScript;
+    private PlayerBombFire _parentScript;
+
+    public void Init(PlayerBombFire parent)
+    {
+        _parentScript = parent;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -13,8 +18,11 @@ public class Bomb : MonoBehaviour
             Lean.Pool.LeanPool.Spawn(_explosionEffectPrefab, transform.localPosition, Quaternion.identity);
         effect.Play();
 
-        //Todo: 풀링 적용
+        if (_parentScript != null)
+        {
+            _parentScript.BombDestroyed();
+        }
+
         Lean.Pool.LeanPool.Despawn(gameObject);
-        ParentScript.BombDestroyed();
     }
 }
