@@ -5,7 +5,7 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
 
-    public const float PlayerMaxStamina = 10f;
+    private const float PlayerMaxStamina = 10f;
     public float PlayerStamina { get; private set; }
 
     private void Awake()

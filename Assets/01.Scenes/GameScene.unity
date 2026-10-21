@@ -1300,6 +1300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6464dd086b69a8f498dde9f821d21ff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBombFire
+  _maxBombs: 1
   _firePoint: {fileID: 968894478}
   _bombPrefab: {fileID: 3353314802549534101, guid: f88f23b2f5df62e44b86849d1d745cbe, type: 3}
 --- !u!1 &1483872009
