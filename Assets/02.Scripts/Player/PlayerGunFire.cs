@@ -1,35 +1,62 @@
+using System;
 using UnityEngine;
 
 // 좌클릭으로 총 발사
 public class PlayerGunFire : MonoBehaviour
 {
+    [SerializeField] private Transform _firePoint;
+    [SerializeField] private Transform _originPoint;
+    [SerializeField] private ParticleSystem _hitEffectPrefab;
+    [SerializeField] private int _maxBulletCount = 30;
+    [SerializeField] private float _reloadTime = 3f;
+
     private float _range = 100f;
     private float _damage = 10f;
     private float _fireInterval = 0.1f;
     private float _fireCoolDown = 0;
+    private int _bulletCount = 0;
+    private float _reloadTimer = 0f;
+    private bool _isReloading = false;
 
-    [SerializeField] private Transform _firePoint;
-    [SerializeField] private Transform _originPoint;
-    [SerializeField] private ParticleSystem _hitEffectPrefab;
-
-    // [SerializeField] private LayerMask _targetLayers;
+    private void Start()
+    {
+        _bulletCount = _maxBulletCount;
+    }
 
 
     private void Update()
     {
+        _fireCoolDown -= Time.deltaTime;
+
+        if (_isReloading)
+        {
+            _reloadTimer += Time.deltaTime;
+            if (_reloadTimer > _reloadTime)
+            {
+                _isReloading = false;
+                _reloadTimer = 0;
+                Reloading();
+            }
+        }
+
         // 1. 마우스 왼쪽 버튼 입력 받기
         if (Input.GetButton("Fire1"))
         {
             Shoot();
         }
 
-        _fireCoolDown -= Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.R) && !_isReloading)
+        {
+            _isReloading = true;
+            _reloadTimer = 0;
+        }
     }
 
     private void Shoot()
     {
-        if (_fireCoolDown > 0) return;
+        if (_fireCoolDown > 0 || _bulletCount <= 0) return;
 
+        _bulletCount--;
         _fireCoolDown = _fireInterval;
 
         // Ray: 레이저 (시작위치, 날아갈 방향)
@@ -52,5 +79,10 @@ public class PlayerGunFire : MonoBehaviour
             effect.transform.forward = hitInfo.normal;
             effect.Play();
         }
+    }
+
+    private void Reloading()
+    {
+        _bulletCount = _maxBulletCount;
     }
 }
