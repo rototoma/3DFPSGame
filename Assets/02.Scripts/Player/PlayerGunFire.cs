@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 // 좌클릭으로 총 발사
@@ -9,14 +10,13 @@ public class PlayerGunFire : MonoBehaviour
     [SerializeField] private ParticleSystem _hitEffectPrefab;
     [SerializeField] private int _maxBulletCount = 30;
     [SerializeField] private float _reloadTime = 3f;
+    [SerializeField] private Coroutine _reloadCoroutine = null;
 
     private float _range = 100f;
     private float _damage = 10f;
     private float _fireInterval = 0.1f;
     private float _fireCoolDown = 0;
     private int _bulletCount = 0;
-    private float _reloadTimer = 0f;
-    private bool _isReloading = false;
 
     private void Start()
     {
@@ -28,27 +28,18 @@ public class PlayerGunFire : MonoBehaviour
     {
         _fireCoolDown -= Time.deltaTime;
 
-        if (_isReloading)
-        {
-            _reloadTimer += Time.deltaTime;
-            if (_reloadTimer > _reloadTime)
-            {
-                _isReloading = false;
-                _reloadTimer = 0;
-                Reloading();
-            }
-        }
-
         // 1. 마우스 왼쪽 버튼 입력 받기
         if (Input.GetButton("Fire1"))
         {
             Shoot();
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && !_isReloading)
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            _isReloading = true;
-            _reloadTimer = 0;
+            if (_reloadCoroutine == null)
+            {
+                _reloadCoroutine = StartCoroutine(Co_Reload());
+            }
         }
     }
 
@@ -81,8 +72,11 @@ public class PlayerGunFire : MonoBehaviour
         }
     }
 
-    private void Reloading()
+    private IEnumerator Co_Reload()
     {
+        yield return new WaitForSeconds(_reloadTime);
+
         _bulletCount = _maxBulletCount;
+        _reloadCoroutine = null;
     }
 }
