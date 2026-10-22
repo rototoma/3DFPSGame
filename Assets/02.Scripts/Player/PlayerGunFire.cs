@@ -70,6 +70,9 @@ public class PlayerGunFire : MonoBehaviour
             effect.transform.forward = hitInfo.normal;
             effect.Play();
         }
+
+        hitInfo.collider.GetComponent<Zombie>()?.TryTakeDamage(_damage);
+        hitInfo.collider.GetComponent<Drum>()?.Damage(_damage);
     }
 
     private IEnumerator Co_Reload()
