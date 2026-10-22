@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public enum ZombieState
@@ -10,55 +11,191 @@ public enum ZombieState
     Death,
 }
 
+// 좀비 AI: 지금 상태에 따라 다른 행동을 한다. (유한 상태 머신)
+[RequireComponent(typeof(CharacterController))]
 public class Zombie : MonoBehaviour
 {
-    // 좀비 AI를 FSM을 활용하여 구현
-    private ZombieState _zombieState = ZombieState.Idle;
+    [Header("상태")]
+    [SerializeField] private ZombieState _state = ZombieState.Idle;
 
     [Header("스탯")]
-    [SerializeField] private float _detectDistance = 8;
-    [SerializeField] private float _moveSpeed = 5;
+    public float MaxHealth = 50f; // 최대 체력
+    public float Health; // 현재 체력
+    public float Damage = 10f; // 공격력
+    public float MoveSpeed = 4f; // 이동 속도 (m/s)
+
+    [Header("거리 (m)")]
+    [SerializeField] private float _detectDistance = 8f; // 플레이어를 발견하는 거리
+    [SerializeField] private float _attackDistance = 1.5f; // 공격하는 거리
+    [SerializeField] private float _comebackDistance = 15f; // 처음 자리에서 이만큼 멀어지면 돌아간다
+
+    [Header("시간 (초)")]
+    [SerializeField] private float _attackInterval = 2f; // 공격 간격
+    [SerializeField] private float _hitTime = 0.3f; // 맞고 멈칫하는 시간
+    [SerializeField] private float _deathTime = 2f; // 쓰러진 뒤 사라지기까지
 
     private CharacterController _controller;
-    private GameObject _player;
+    private Player _player;
+    private Vector3 _startPosition; // 처음 자리
+    private float _attackTimer; // 다음 공격까지 남은 시간
+    private Coroutine _hitCoroutine; // 실행 중인 피격
 
-    private void Start()
+    private void Awake()
     {
-        _player = GameObject.FindGameObjectWithTag("Player");
+        _controller = GetComponent<CharacterController>();
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>(); // 태그로 플레이어를 찾는다.
+        _startPosition = transform.position;
+        Health = MaxHealth;
     }
 
     private void Update()
     {
-        if (_zombieState == ZombieState.Idle)
+        // 지금 상태에 맞는 함수를 부른다.
+        switch (_state)
         {
-            Idle();
-        }
-        else if (_zombieState == ZombieState.Trace)
-        {
-            Trace();
-        }
-
-        {
+            case ZombieState.Idle:
+                Idle();
+                break;
+            case ZombieState.Trace:
+                Trace();
+                break;
+            case ZombieState.Comeback:
+                Comeback();
+                break;
+            case ZombieState.Attack:
+                Attack();
+                break;
         }
     }
 
+    // 상태는 이 함수로만 바꾼다.
+    private void ChangeState(ZombieState nextState)
+    {
+        Debug.Log($"{name}: {_state} -> {nextState}");
+        _state = nextState;
+    }
+
+    // 대기: 플레이어가 발견 거리 안에 들어오면 쫓아간다.
     private void Idle()
     {
-        float distance = Vector3.Distance(transform.position, _player.transform.position);
-        if (distance <= _detectDistance)
+        if (DistanceToPlayer() <= _detectDistance)
         {
-            Debug.Log($"{_zombieState} -> trace");
-            _zombieState = ZombieState.Trace;
+            ChangeState(ZombieState.Trace);
         }
     }
 
+    // 추격: 플레이어 쪽으로 걸어간다.
     private void Trace()
     {
-        Vector3 direction = _player.transform.position - transform.position;
-        direction.y = 0f;
+        // 처음 자리에서 너무 멀어졌으면 돌아간다.
+        if (Vector3.Distance(transform.position, _startPosition) > _comebackDistance)
+        {
+            ChangeState(ZombieState.Comeback);
+            return;
+        }
+
+        // 공격 거리 안이면 공격한다.
+        if (DistanceToPlayer() <= _attackDistance)
+        {
+            _attackTimer = 0f; // 공격 상태가 되자마자 첫 공격을 한다.
+            ChangeState(ZombieState.Attack);
+            return;
+        }
+
+        MoveTo(_player.transform.position);
+    }
+
+    // 복귀: 처음 자리로 걸어간다. 도착하면 체력을 채우고 다시 기다린다.
+    private void Comeback()
+    {
+        if (Vector3.Distance(transform.position, _startPosition) <= 0.5f)
+        {
+            Health = MaxHealth;
+            ChangeState(ZombieState.Idle);
+            return;
+        }
+
+        MoveTo(_startPosition);
+    }
+
+    // 공격: 공격 간격마다 플레이어를 때린다.
+    private void Attack()
+    {
+        // 플레이어가 공격 거리 밖으로 나가면 다시 쫓아간다.
+        if (DistanceToPlayer() > _attackDistance)
+        {
+            ChangeState(ZombieState.Trace);
+            return;
+        }
+
+        _attackTimer -= Time.deltaTime;
+        if (_attackTimer <= 0f)
+        {
+            _attackTimer = _attackInterval;
+            _player.TryTakeDamage(Damage);
+        }
+    }
+
+    // 대미지를 받는다. 이미 죽었으면 받지 않고 false를 돌려준다.
+    public bool TryTakeDamage(float damage)
+    {
+        if (_state == ZombieState.Death)
+        {
+            return false;
+        }
+
+        Health = Mathf.Max(0f, Health - damage);
+
+        if (Health > 0f)
+        {
+            // 피격: 실행 중인 피격이 있으면 멈추고 처음부터 다시 시작한다.
+            if (_hitCoroutine != null)
+            {
+                StopCoroutine(_hitCoroutine);
+            }
+
+            ChangeState(ZombieState.Hit);
+            _hitCoroutine = StartCoroutine(Hit_Coroutine());
+        }
+        else
+        {
+            // 죽음: 하던 일(코루틴)을 모두 멈추고 쓰러진다.
+            StopAllCoroutines();
+            ChangeState(ZombieState.Death);
+            StartCoroutine(Death_Coroutine());
+        }
+
+        return true;
+    }
+
+    private IEnumerator Hit_Coroutine()
+    {
+        yield return new WaitForSeconds(_hitTime); // 잠깐 멈칫한다.
+        _hitCoroutine = null;
+        ChangeState(ZombieState.Trace); // 맞았으니 쫓아간다.
+    }
+
+    private IEnumerator Death_Coroutine()
+    {
+        _controller.enabled = false; // 더 이상 길을 막지 않고 총알도 맞지 않는다.
+        yield return new WaitForSeconds(_deathTime);
+        Destroy(gameObject);
+    }
+
+    // 플레이어까지의 거리
+    private float DistanceToPlayer()
+    {
+        return Vector3.Distance(transform.position, _player.transform.position);
+    }
+
+    // 목표 지점을 향해 바닥을 따라 걷는다.
+    private void MoveTo(Vector3 target)
+    {
+        Vector3 direction = target - transform.position;
+        direction.y = 0f; // 높이 차이는 빼고 바닥 방향만 본다.
         direction.Normalize();
 
-        transform.forward = direction;
-        _controller.SimpleMove(direction * _moveSpeed);
+        transform.forward = direction; // 가는 쪽을 바라본다.
+        _controller.SimpleMove(direction * MoveSpeed); // 중력은 SimpleMove가 넣어 준다.
     }
 }
