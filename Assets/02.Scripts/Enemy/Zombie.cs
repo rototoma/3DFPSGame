@@ -4,6 +4,7 @@ using UnityEngine;
 public enum ZombieState
 {
     Idle,
+    Roaming,
     Trace,
     Comeback,
     Attack,
@@ -23,6 +24,7 @@ public class Zombie : MonoBehaviour
     public float Health; // 현재 체력
     public float Damage = 10f; // 공격력
     public float MoveSpeed = 4f; // 이동 속도 (m/s)
+    public float RoamingCoolDown = 1f; // roaming 시작까지 남은 시간
 
     [Header("거리 (m)")]
     [SerializeField] private float _detectDistance = 8f; // 플레이어를 발견하는 거리
@@ -33,12 +35,15 @@ public class Zombie : MonoBehaviour
     [SerializeField] private float _attackInterval = 2f; // 공격 간격
     [SerializeField] private float _hitTime = 0.3f; // 맞고 멈칫하는 시간
     [SerializeField] private float _deathTime = 2f; // 쓰러진 뒤 사라지기까지
+    [SerializeField] private float _roamingCoolTime = 1f; // idle에서 roaming으로 전환하는 간격
+    [SerializeField] private float _roamingMoveTimer = 3f;
 
     private CharacterController _controller;
     private Player _player;
     private Vector3 _startPosition; // 처음 자리
     private float _attackTimer; // 다음 공격까지 남은 시간
     private Coroutine _hitCoroutine; // 실행 중인 피격
+    private Coroutine _roamingCoroutine; // 실행 중인 배회
 
     private void Awake()
     {
@@ -55,6 +60,9 @@ public class Zombie : MonoBehaviour
         {
             case ZombieState.Idle:
                 Idle();
+                break;
+            case ZombieState.Roaming:
+                Roaming();
                 break;
             case ZombieState.Trace:
                 Trace();
@@ -73,14 +81,37 @@ public class Zombie : MonoBehaviour
     {
         Debug.Log($"{name}: {_state} -> {nextState}");
         _state = nextState;
+
+        if (_roamingCoroutine != null)
+        {
+            StopCoroutine(_roamingCoroutine);
+            _roamingCoroutine = null;
+        }
     }
 
     // 대기: 플레이어가 발견 거리 안에 들어오면 쫓아간다.
     private void Idle()
     {
+        RoamingCoolDown -= Time.deltaTime;
+
         if (DistanceToPlayer() <= _detectDistance)
         {
             ChangeState(ZombieState.Trace);
+        }
+
+        // 로밍 쿨타임 돌면 로밍 ㄱㄱ
+        if (RoamingCoolDown < 0)
+        {
+            ChangeState(ZombieState.Roaming);
+            RoamingCoolDown = _roamingCoolTime;
+        }
+    }
+
+    private void Roaming()
+    {
+        if (_roamingCoroutine == null)
+        {
+            _roamingCoroutine = StartCoroutine(Roaming_Coroutine());
         }
     }
 
@@ -102,7 +133,7 @@ public class Zombie : MonoBehaviour
             return;
         }
 
-        MoveTo(_player.transform.position);
+        MoveTo(_player.transform.position, MoveSpeed);
     }
 
     // 복귀: 처음 자리로 걸어간다. 도착하면 체력을 채우고 다시 기다린다.
@@ -115,7 +146,7 @@ public class Zombie : MonoBehaviour
             return;
         }
 
-        MoveTo(_startPosition);
+        MoveTo(_startPosition, MoveSpeed);
     }
 
     // 공격: 공격 간격마다 플레이어를 때린다.
@@ -168,6 +199,56 @@ public class Zombie : MonoBehaviour
         return true;
     }
 
+    private IEnumerator Roaming_Coroutine()
+    {
+        // 주변 아무 방향이나 이동
+        float xMove = UnityEngine.Random.Range(-2f, 2f);
+        float zMove = UnityEngine.Random.Range(-2f, 2f);
+        Vector3 roamingTarget = new Vector3(_startPosition.x + xMove, _startPosition.y, _startPosition.z + zMove);
+
+        float timer = 0f;
+        while (timer < _roamingMoveTimer)
+        {
+            MoveTo(roamingTarget, MoveSpeed / 3.0f);
+            timer += Time.deltaTime;
+            if ((roamingTarget - transform.position).magnitude < 0.1f)
+            {
+                break;
+            }
+
+            if (DistanceToPlayer() <= _detectDistance)
+            {
+                ChangeState(ZombieState.Trace);
+                yield break;
+            }
+
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1.0f);
+
+        timer = 0f;
+        while (timer < _roamingMoveTimer)
+        {
+            MoveTo(_startPosition, MoveSpeed / 3.0f);
+            timer += Time.deltaTime;
+            if ((roamingTarget - transform.position).magnitude < 0.1f)
+            {
+                break;
+            }
+
+            if (DistanceToPlayer() <= _detectDistance)
+            {
+                ChangeState(ZombieState.Trace);
+                yield break;
+            }
+
+            yield return null;
+        }
+
+        ChangeState(ZombieState.Idle);
+    }
+
     private IEnumerator Hit_Coroutine()
     {
         yield return new WaitForSeconds(_hitTime); // 잠깐 멈칫한다.
@@ -189,13 +270,13 @@ public class Zombie : MonoBehaviour
     }
 
     // 목표 지점을 향해 바닥을 따라 걷는다.
-    private void MoveTo(Vector3 target)
+    private void MoveTo(Vector3 target, float moveSpeed)
     {
         Vector3 direction = target - transform.position;
         direction.y = 0f; // 높이 차이는 빼고 바닥 방향만 본다.
         direction.Normalize();
 
         transform.forward = direction; // 가는 쪽을 바라본다.
-        _controller.SimpleMove(direction * MoveSpeed); // 중력은 SimpleMove가 넣어 준다.
+        _controller.SimpleMove(direction * moveSpeed); // 중력은 SimpleMove가 넣어 준다.
     }
 }

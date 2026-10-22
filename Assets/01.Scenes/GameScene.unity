@@ -1261,9 +1261,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f82f1b20896faf446bb2f48d75fcaa0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Zombie
+  _state: 0
+  MaxHealth: 50
+  Health: 0
+  Damage: 10
+  MoveSpeed: 4
+  RoamingCoolDown: 1
   _detectDistance: 8
-  _moveSpeed: 5
-  _combackDistance: 10
+  _attackDistance: 1.5
+  _comebackDistance: 15
+  _attackInterval: 2
+  _hitTime: 0.3
+  _deathTime: 2
+  _roamingCoolTime: 1
+  _roamingMoveTimer: 3
 --- !u!143 &1416819814
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1378,6 +1389,7 @@ GameObject:
   - component: {fileID: 1424342458}
   - component: {fileID: 1424342459}
   - component: {fileID: 1424342460}
+  - component: {fileID: 1424342461}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1551,6 +1563,18 @@ MonoBehaviour:
   _maxBombs: 1
   _firePoint: {fileID: 968894478}
   _bombPrefab: {fileID: 3353314802549534101, guid: f88f23b2f5df62e44b86849d1d745cbe, type: 3}
+--- !u!114 &1424342461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424342451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53a6cdad29d910449b40a31cbe6d1a2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
 --- !u!1 &1483872009
 GameObject:
   m_ObjectHideFlags: 0
