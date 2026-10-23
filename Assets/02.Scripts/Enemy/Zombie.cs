@@ -56,6 +56,8 @@ public class Zombie : MonoBehaviour, IDamageable
 
     private void Update()
     {
+        // Game Play상태가 아니라면 연산x
+        if (GameManager.Instance.GameState != GameState.Playing) return;
         // 지금 상태에 맞는 함수를 부른다.
         switch (_state)
         {

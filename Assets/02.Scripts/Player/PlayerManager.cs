@@ -35,6 +35,8 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        // Game Play상태가 아니라면 연산x
+        if (GameManager.Instance.GameState != GameState.Playing) return;
         PlayerStamina = Mathf.Clamp(PlayerStamina + Time.deltaTime * 0.5f, 0f, PlayerMaxStamina);
     }
 

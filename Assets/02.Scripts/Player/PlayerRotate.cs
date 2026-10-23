@@ -10,6 +10,8 @@ public class PlayerRotate : MonoBehaviour
 
     private void Update()
     {
+        // Game Play상태가 아니라면 연산x
+        if (GameManager.Instance.GameState != GameState.Playing) return;
         float mouseX = Input.GetAxis("Mouse X");
 
         _accumulationX += mouseX * _rotateSpeed * Time.deltaTime;

@@ -29,6 +29,9 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        // Game Play상태가 아니라면 연산x
+        if (GameManager.Instance.GameState != GameState.Playing) return;
+
         // GetAxis: 0~1사이로 보정이 들어감. GetAxisRaw: 키를 누르면 즉시, 떼면 즉시 반영
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");

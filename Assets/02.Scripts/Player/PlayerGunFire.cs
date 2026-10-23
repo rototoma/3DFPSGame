@@ -26,6 +26,8 @@ public class PlayerGunFire : MonoBehaviour
 
     private void Update()
     {
+        // Game Play상태가 아니라면 연산x
+        if (GameManager.Instance.GameState != GameState.Playing) return;
         _fireCoolDown -= Time.deltaTime;
 
         // 1. 마우스 왼쪽 버튼 입력 받기
