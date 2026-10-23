@@ -50,7 +50,7 @@ public class Drum : MonoBehaviour, IDamageable
     private void ApplyAreaDamage()
     {
         // position, radius, layerMask
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 3, LayerMask.GetMask("Drum"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _explosionRange);
 
         foreach (Collider col in colliders)
         {

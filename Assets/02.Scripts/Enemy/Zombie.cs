@@ -186,8 +186,7 @@ public class Zombie : MonoBehaviour, IDamageable
                 StopCoroutine(_hitCoroutine);
             }
 
-            GameObject bloodSpray = Lean.Pool.LeanPool.Spawn(_bloodSprayPrefab);
-            bloodSpray.transform.parent = gameObject.transform;
+            GameObject bloodSpray = Instantiate(_bloodSprayPrefab, gameObject.transform);
             bloodSpray.transform.position = damageInfo.HitPoint;
             bloodSpray.transform.forward = damageInfo.HitNormal;
 

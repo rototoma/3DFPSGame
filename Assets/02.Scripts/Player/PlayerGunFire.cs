@@ -63,16 +63,14 @@ public class PlayerGunFire : MonoBehaviour
 
         // 4. 레이를 발사하고, 부딪힌 물체가 있다면 이펙트 표시하기
         bool isHit = Physics.Raycast(ray, out hitInfo, _range);
-        if (isHit)
-        {
-            ParticleSystem effect = Lean.Pool.LeanPool.Spawn(_hitEffectPrefab);
-            effect.transform.position = hitInfo.point;
-            effect.transform.forward = hitInfo.normal;
-            effect.Play();
-        }
+        if (!isHit) return;
+
+        ParticleSystem effect = Lean.Pool.LeanPool.Spawn(_hitEffectPrefab);
+        effect.transform.position = hitInfo.point;
+        effect.transform.forward = hitInfo.normal;
+        effect.Play();
 
         DamageInfo damageInfo = new DamageInfo(_damage, hitInfo.point, hitInfo.normal);
-
         hitInfo.collider.GetComponent<IDamageable>()?.TakeDamage(damageInfo);
     }
 
