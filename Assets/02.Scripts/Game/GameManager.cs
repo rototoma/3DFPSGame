@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private GameState _gameState = GameState.Ready;
     public GameState GameState => _gameState;
     [SerializeField] private TextMeshProUGUI _stateText;
+    [SerializeField] private UI_ScreenEffect _screenEffect;
 
     private void Awake()
     {
@@ -29,6 +30,14 @@ public class GameManager : MonoBehaviour
         _instance = this;
 
         StartCoroutine(StartSequence_Coroutine());
+    }
+
+    public void GameOver()
+    {
+        _gameState = GameState.GameOver;
+        _stateText.gameObject.SetActive(true);
+        _stateText.SetText("실패....");
+        _ScreenEffect.Grad();
     }
 
     private IEnumerator StartSequence_Coroutine()

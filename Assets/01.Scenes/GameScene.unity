@@ -2327,6 +2327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   _stateText: {fileID: 1543842867}
+  _ScreenEffect: {fileID: 2051738410}
 --- !u!4 &1173395593
 Transform:
   m_ObjectHideFlags: 0
@@ -3679,7 +3680,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Ready !
+  m_text: "\uBC57"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 52fb61a76c7695b4eb0430438fb3f0da, type: 2}
   m_sharedMaterial: {fileID: 4787873350180550666, guid: 52fb61a76c7695b4eb0430438fb3f0da, type: 2}
@@ -4976,6 +4977,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UI_ScreenEffect
   _hitScreen: {fileID: 977001496}
   _flashTime: 0.3
+  _gradTime: 1
 --- !u!1 &2109354390
 GameObject:
   m_ObjectHideFlags: 0

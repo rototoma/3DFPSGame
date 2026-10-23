@@ -40,16 +40,16 @@ public class PlayerManager : MonoBehaviour
         PlayerStamina = Mathf.Clamp(PlayerStamina + Time.deltaTime * 0.5f, 0f, PlayerMaxStamina);
     }
 
-    public bool DecreaseHealth(float amount)
+    public void DecreaseHealth(float amount)
     {
         if (PlayerHealth <= 0)
         {
-            return false;
+            GameManager.Instance.GameOver();
+            return;
         }
 
         PlayerHealth -= amount;
         _hitScreen.Fade();
-        return true;
     }
 
 
