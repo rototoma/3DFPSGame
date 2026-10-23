@@ -10,6 +10,8 @@ public class PlayerManager : MonoBehaviour
     private const float PlayerMaxHealth = 100f;
     public float PlayerHealth { get; private set; }
 
+    [SerializeField] private UI_ScreenEffect _hitScreen;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -44,6 +46,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         PlayerHealth -= amount;
+        _hitScreen.Fade();
         return true;
     }
 
