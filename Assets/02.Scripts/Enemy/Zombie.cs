@@ -163,8 +163,11 @@ public class Zombie : MonoBehaviour, IDamageable
         _attackTimer -= Time.deltaTime;
         if (_attackTimer <= 0f)
         {
+            var closest = _player.GetComponent<Collider>().ClosestPoint(transform.position);
+            DamageInfo damageInfo =
+                new DamageInfo(Damage, closest, (gameObject.transform.position - closest).normalized);
             _attackTimer = _attackInterval;
-            _player.TakeDamage(new DamageInfo(Damage));
+            _player.TakeDamage(damageInfo);
         }
     }
 
