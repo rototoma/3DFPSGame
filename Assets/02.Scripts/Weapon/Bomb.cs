@@ -4,6 +4,8 @@ using UnityEngine;
 public class Bomb : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _explosionEffectPrefab;
+    [SerializeField] private float _explosionRange = 4.5f;
+    [SerializeField] private float _damage = 100f;
 
     private PlayerBombFire _parentScript;
 
@@ -12,11 +14,23 @@ public class Bomb : MonoBehaviour
         _parentScript = parent;
     }
 
+    private void ApplyAreaDamage()
+    {
+        // position, radius, layerMask
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 3, LayerMask.GetMask("Drum"));
+
+        foreach (Collider col in colliders)
+        {
+            col.GetComponent<IDamageable>()?.TakeDamage(_damage);
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         ParticleSystem effect =
             Lean.Pool.LeanPool.Spawn(_explosionEffectPrefab, transform.localPosition, Quaternion.identity);
         effect.Play();
+        ApplyAreaDamage();
 
         if (_parentScript != null)
         {

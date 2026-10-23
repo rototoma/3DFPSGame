@@ -3,7 +3,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Drum : MonoBehaviour
+public class Drum : MonoBehaviour, IDamageable
 {
     [SerializeField] private ParticleSystem _explosionEffectPrefab;
 
@@ -23,7 +23,7 @@ public class Drum : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    public void Damage(float damage)
+    public void TakeDamage(float damage)
     {
         if (_health <= 0f) return;
 
@@ -54,8 +54,8 @@ public class Drum : MonoBehaviour
 
         foreach (Collider col in colliders)
         {
-            col.GetComponent<Drum>()?.Damage(_damage);
-            col.GetComponent<Zombie>()?.TryTakeDamage(_damage);
+            col.GetComponent<Drum>()?.TakeDamage(_damage);
+            col.GetComponent<Zombie>()?.TakeDamage(_damage);
         }
     }
 }

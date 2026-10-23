@@ -14,7 +14,7 @@ public enum ZombieState
 
 // 좀비 AI: 지금 상태에 따라 다른 행동을 한다. (유한 상태 머신)
 [RequireComponent(typeof(CharacterController))]
-public class Zombie : MonoBehaviour
+public class Zombie : MonoBehaviour, IDamageable
 {
     [Header("상태")]
     [SerializeField] private ZombieState _state = ZombieState.Idle;
@@ -168,11 +168,11 @@ public class Zombie : MonoBehaviour
     }
 
     // 대미지를 받는다. 이미 죽었으면 받지 않고 false를 돌려준다.
-    public bool TryTakeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         if (_state == ZombieState.Death)
         {
-            return false;
+            return;
         }
 
         Health = Mathf.Max(0f, Health - damage);
@@ -196,7 +196,7 @@ public class Zombie : MonoBehaviour
             StartCoroutine(Death_Coroutine());
         }
 
-        return true;
+        return;
     }
 
     private IEnumerator Roaming_Coroutine()
