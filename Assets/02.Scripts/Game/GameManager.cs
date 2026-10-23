@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        _instance = this;
+
         StartCoroutine(StartSequence_Coroutine());
     }
 
