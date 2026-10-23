@@ -23,11 +23,11 @@ public class Drum : MonoBehaviour, IDamageable
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(DamageInfo damageInfo)
     {
         if (_health <= 0f) return;
 
-        _health -= damage;
+        _health -= damageInfo.Value;
 
         if (_health <= 0)
         {
@@ -54,8 +54,10 @@ public class Drum : MonoBehaviour, IDamageable
 
         foreach (Collider col in colliders)
         {
-            col.GetComponent<Drum>()?.TakeDamage(_damage);
-            col.GetComponent<Zombie>()?.TakeDamage(_damage);
+            var closest = col.ClosestPoint(transform.position);
+            DamageInfo damageInfo =
+                new DamageInfo(_damage, closest, (gameObject.transform.position - closest).normalized);
+            col.GetComponent<IDamageable>()?.TakeDamage(damageInfo);
         }
     }
 }

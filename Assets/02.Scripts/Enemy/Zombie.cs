@@ -16,6 +16,7 @@ public enum ZombieState
 [RequireComponent(typeof(CharacterController))]
 public class Zombie : MonoBehaviour, IDamageable
 {
+    [SerializeField] private GameObject _bloodSprayPrefab;
     [Header("상태")]
     [SerializeField] private ZombieState _state = ZombieState.Idle;
 
@@ -168,14 +169,14 @@ public class Zombie : MonoBehaviour, IDamageable
     }
 
     // 대미지를 받는다. 이미 죽었으면 받지 않고 false를 돌려준다.
-    public void TakeDamage(float damage)
+    public void TakeDamage(DamageInfo damageInfo)
     {
         if (_state == ZombieState.Death)
         {
             return;
         }
 
-        Health = Mathf.Max(0f, Health - damage);
+        Health = Mathf.Max(0f, Health - damageInfo.Value);
 
         if (Health > 0f)
         {
@@ -184,6 +185,11 @@ public class Zombie : MonoBehaviour, IDamageable
             {
                 StopCoroutine(_hitCoroutine);
             }
+
+            GameObject bloodSpray = Lean.Pool.LeanPool.Spawn(_bloodSprayPrefab);
+            bloodSpray.transform.parent = gameObject.transform;
+            bloodSpray.transform.position = damageInfo.HitPoint;
+            bloodSpray.transform.forward = damageInfo.HitNormal;
 
             ChangeState(ZombieState.Hit);
             _hitCoroutine = StartCoroutine(Hit_Coroutine());

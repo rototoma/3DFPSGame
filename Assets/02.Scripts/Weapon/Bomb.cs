@@ -21,7 +21,10 @@ public class Bomb : MonoBehaviour
 
         foreach (Collider col in colliders)
         {
-            col.GetComponent<IDamageable>()?.TakeDamage(_damage);
+            var closest = col.ClosestPoint(transform.position);
+            DamageInfo damageInfo =
+                new DamageInfo(_damage, closest, (gameObject.transform.position - closest).normalized);
+            col.GetComponent<IDamageable>()?.TakeDamage(damageInfo);
         }
     }
 
