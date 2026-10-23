@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
         _gameState = GameState.GameOver;
         _stateText.gameObject.SetActive(true);
         _stateText.SetText("실패....");
-        _ScreenEffect.Grad();
+        _screenEffect.Grad();
     }
 
     private IEnumerator StartSequence_Coroutine()
