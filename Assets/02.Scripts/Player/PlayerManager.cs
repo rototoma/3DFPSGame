@@ -7,6 +7,8 @@ public class PlayerManager : MonoBehaviour
 
     private const float PlayerMaxStamina = 10f;
     public float PlayerStamina { get; private set; }
+    private const float PlayerMaxHealth = 100f;
+    public float PlayerHealth { get; private set; }
 
     private void Awake()
     {
@@ -18,6 +20,7 @@ public class PlayerManager : MonoBehaviour
 
         Instance = this;
         PlayerStamina = PlayerMaxStamina;
+        PlayerHealth = PlayerMaxHealth;
     }
 
     private void OnDestroy()
@@ -32,6 +35,18 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerStamina = Mathf.Clamp(PlayerStamina + Time.deltaTime * 0.5f, 0f, PlayerMaxStamina);
     }
+
+    public bool DecreaseHealth(float amount)
+    {
+        if (PlayerHealth <= 0)
+        {
+            return false;
+        }
+
+        PlayerHealth -= amount;
+        return true;
+    }
+
 
     public bool UseStamina(float amount)
     {

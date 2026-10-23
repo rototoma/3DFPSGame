@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
-    public void TryTakeDamage(float damage)
+    public void TakeDamage(DamageInfo damageInfo)
     {
+        PlayerManager.Instance.DecreaseHealth(damageInfo.Value);
     }
 }

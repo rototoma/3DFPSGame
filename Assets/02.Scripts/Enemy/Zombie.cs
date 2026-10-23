@@ -164,7 +164,7 @@ public class Zombie : MonoBehaviour, IDamageable
         if (_attackTimer <= 0f)
         {
             _attackTimer = _attackInterval;
-            _player.TryTakeDamage(Damage);
+            _player.TakeDamage(new DamageInfo(Damage));
         }
     }
 

@@ -12,4 +12,11 @@ public struct DamageInfo
         HitPoint = hitPoint;
         HitNormal = hitNormal;
     }
+
+    public DamageInfo(float value)
+    {
+        Value = value;
+        HitPoint = Vector3.zero;
+        HitNormal = Vector3.zero;
+    }
 }
