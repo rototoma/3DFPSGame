@@ -17,6 +17,6 @@ public class ZombieHealthBar : MonoBehaviour
         _healthBar.value = _zombie.Health / _zombie.MaxHealth;
 
         // 빌보드: 체력바가 어디서든 카메라에 잘 보이도록 함
-        transform.forward = Camera.main.transform.forward;
+        _healthBar.transform.forward = Camera.main.transform.forward;
     }
 }
