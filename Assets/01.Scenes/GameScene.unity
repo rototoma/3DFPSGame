@@ -6114,6 +6114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UI_Stamina
   _staminaSlider: {fileID: 2109354392}
   _healthSlider: {fileID: 1175731715}
+  _player: {fileID: 1424342461}
 --- !u!114 &2051738410
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,7 +7,6 @@ public class UI_ScreenEffect : MonoBehaviour
 {
     [SerializeField] private Image _hitScreen;
 
-
     [SerializeField] private float _flashTime = 0.06f;
     [SerializeField] private float _gradTime = 3f;
 
