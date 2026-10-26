@@ -8,6 +8,19 @@ public class CursorManager : MonoBehaviour
         LockCursor();
     }
 
+    private void Update()
+    {
+        if (GameManager.Instance.GameState != GameState.Playing) return;
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            UnlockCursor();
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftAlt))
+        {
+            LockCursor();
+        }
+    }
+
     public void LockCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;

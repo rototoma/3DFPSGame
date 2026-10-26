@@ -360,7 +360,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5843434696630719957}
   - component: {fileID: 244256472732527330}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MiniMapIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
