@@ -228,6 +228,7 @@ public class Zombie : MonoBehaviour, IDamageable
             // 죽음: 하던 일(코루틴)을 모두 멈추고 쓰러진다.
             StopAllCoroutines();
             ChangeState(ZombieState.Death);
+            ZombieManager.Instance.NotifyZombieDied(this); // 스폰된 수에서 빼고 새 좀비를 스폰 예정에 넣는다.
             StartCoroutine(Death_Coroutine());
         }
 
@@ -318,7 +319,11 @@ public class Zombie : MonoBehaviour, IDamageable
         direction.y = 0f; // 높이 차이는 빼고 바닥 방향만 본다.
         direction.Normalize();
 
-        transform.forward = direction; // 가는 쪽을 바라본다.
+        if (direction.magnitude != 0)
+        {
+            transform.forward = direction; // 가는 쪽을 바라본다.
+        }
+
         _controller.SimpleMove(direction * moveSpeed); // 중력은 SimpleMove가 넣어 준다.
     }
 }
