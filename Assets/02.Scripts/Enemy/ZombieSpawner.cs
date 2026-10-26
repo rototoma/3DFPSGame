@@ -1,3 +1,4 @@
+using Lean.Pool;
 using UnityEngine;
 
 // 정해진 위치에서 좀비를 하나씩 스폰해 최대 수를 계속 유지한다. 스폰 예정/스폰된 수는 ZombieManager가 관리한다.
@@ -38,6 +39,6 @@ public class ZombieSpawner : MonoBehaviour
             ? _spawnPoints[Random.Range(0, _spawnPoints.Length)]
             : transform;
 
-        Instantiate(_zombiePrefab, point.position, point.rotation);
+        LeanPool.Spawn(_zombiePrefab, point.position, point.rotation);
     }
 }
