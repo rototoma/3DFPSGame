@@ -44,7 +44,7 @@ Unity 6 (`6000.3.22f1`, URP 17.3) 기반 3D FPS 학습용 게임 프로젝트. �
 ## 코드 컨벤션
 
 - private 필드는 `_camelCase`, Inspector 노출은 public 필드 대신 `[SerializeField] private`를 우선한다.
-- 코루틴 메서드명은 `xxx_Coroutine` 형식을 주로 쓴다 (일부 `Co_xxx` 혼재).
+- 코루틴 메서드명은 `xxx_Coroutine` 형식으로 쓴다.
 - 주석과 답변은 한국어로 작성한다.
 
 ## 작업 지침
