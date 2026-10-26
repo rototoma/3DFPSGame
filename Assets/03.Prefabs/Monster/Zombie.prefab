@@ -324,11 +324,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Zombie
   _bloodSprayPrefab: {fileID: 1000013355911406, guid: d32aa916f50cac94db11e6f19821a58f, type: 3}
   _state: 0
-  MaxHealth: 50
-  Health: 0
-  Damage: 10
-  MoveSpeed: 4
-  RoamingCoolDown: 1
+  _maxHealth: 50
+  _damage: 10
+  _moveSpeed: 4
+  _roamingCoolDown: 1
   _detectDistance: 8
   _attackDistance: 1.5
   _comebackDistance: 15
@@ -350,6 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieHealthBar
   _healthBar: {fileID: 5478948256212387157}
+  _zombie: {fileID: 33554165768057024}
 --- !u!1 &1968389245143155498
 GameObject:
   m_ObjectHideFlags: 0

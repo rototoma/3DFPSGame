@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum ZombieState
 {
@@ -13,6 +15,7 @@ public enum ZombieState
 }
 
 // 좀비 AI: 지금 상태에 따라 다른 행동을 한다. (유한 상태 머신)
+// 외부에서는 Zombie 목록·체력 조회를 ZombieManager(싱글톤)를 통해 한다.
 [RequireComponent(typeof(CharacterController))]
 public class Zombie : MonoBehaviour, IDamageable
 {
@@ -21,11 +24,10 @@ public class Zombie : MonoBehaviour, IDamageable
     [SerializeField] private ZombieState _state = ZombieState.Idle;
 
     [Header("스탯")]
-    public float MaxHealth = 50f; // 최대 체력
-    public float Health; // 현재 체력
-    public float Damage = 10f; // 공격력
-    public float MoveSpeed = 4f; // 이동 속도 (m/s)
-    public float RoamingCoolDown = 1f; // roaming 시작까지 남은 시간
+    [SerializeField] private float _maxHealth = 50f; // 최대 체력
+    [SerializeField] private float _damage = 10f; // 공격력
+    [SerializeField] private float _moveSpeed = 4f; // 이동 속도 (m/s)
+    [SerializeField] private float _roamingCoolDown = 1f; // roaming 시작까지 남은 시간
 
     [Header("거리 (m)")]
     [SerializeField] private float _detectDistance = 8f; // 플레이어를 발견하는 거리
@@ -39,6 +41,11 @@ public class Zombie : MonoBehaviour, IDamageable
     [SerializeField] private float _roamingCoolTime = 1f; // idle에서 roaming으로 전환하는 간격
     [SerializeField] private float _roamingMoveTimer = 3f;
 
+    public ZombieState State => _state;
+    public float MaxHealth => _maxHealth;
+    public float Health { get; private set; } // 현재 체력
+    public event Action HealthChanged; // 체력이 바뀔 때마다 호출
+
     private CharacterController _controller;
     private Player _player;
     private Vector3 _startPosition; // 처음 자리
@@ -46,12 +53,30 @@ public class Zombie : MonoBehaviour, IDamageable
     private Coroutine _hitCoroutine; // 실행 중인 피격
     private Coroutine _roamingCoroutine; // 실행 중인 배회
 
+    private void OnEnable()
+    {
+        ZombieManager manager = ZombieManager.Instance;
+        if (manager != null)
+        {
+            manager.Register(this);
+        }
+    }
+
+    private void OnDisable()
+    {
+        ZombieManager manager = ZombieManager.Instance;
+        if (manager != null)
+        {
+            manager.Unregister(this);
+        }
+    }
+
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>(); // 태그로 플레이어를 찾는다.
         _startPosition = transform.position;
-        Health = MaxHealth;
+        SetHealth(_maxHealth);
     }
 
     private void Update()
@@ -95,7 +120,7 @@ public class Zombie : MonoBehaviour, IDamageable
     // 대기: 플레이어가 발견 거리 안에 들어오면 쫓아간다.
     private void Idle()
     {
-        RoamingCoolDown -= Time.deltaTime;
+        _roamingCoolDown -= Time.deltaTime;
 
         if (DistanceToPlayer() <= _detectDistance)
         {
@@ -103,10 +128,10 @@ public class Zombie : MonoBehaviour, IDamageable
         }
 
         // 로밍 쿨타임 돌면 로밍 ㄱㄱ
-        if (RoamingCoolDown < 0)
+        if (_roamingCoolDown < 0)
         {
             ChangeState(ZombieState.Roaming);
-            RoamingCoolDown = _roamingCoolTime;
+            _roamingCoolDown = _roamingCoolTime;
         }
     }
 
@@ -136,7 +161,7 @@ public class Zombie : MonoBehaviour, IDamageable
             return;
         }
 
-        MoveTo(_player.transform.position, MoveSpeed);
+        MoveTo(_player.transform.position, _moveSpeed);
     }
 
     // 복귀: 처음 자리로 걸어간다. 도착하면 체력을 채우고 다시 기다린다.
@@ -144,12 +169,12 @@ public class Zombie : MonoBehaviour, IDamageable
     {
         if (Vector3.Distance(transform.position, _startPosition) <= 0.5f)
         {
-            Health = MaxHealth;
+            SetHealth(_maxHealth);
             ChangeState(ZombieState.Idle);
             return;
         }
 
-        MoveTo(_startPosition, MoveSpeed);
+        MoveTo(_startPosition, _moveSpeed);
     }
 
     // 공격: 공격 간격마다 플레이어를 때린다.
@@ -167,7 +192,7 @@ public class Zombie : MonoBehaviour, IDamageable
         {
             var closest = _player.GetComponent<Collider>().ClosestPoint(transform.position);
             DamageInfo damageInfo =
-                new DamageInfo(Damage, closest, (gameObject.transform.position - closest).normalized);
+                new DamageInfo(_damage, closest, (gameObject.transform.position - closest).normalized);
             _attackTimer = _attackInterval;
             _player.TakeDamage(damageInfo);
         }
@@ -181,7 +206,7 @@ public class Zombie : MonoBehaviour, IDamageable
             return;
         }
 
-        Health = Mathf.Max(0f, Health - damageInfo.Value);
+        SetHealth(Mathf.Max(0f, Health - damageInfo.Value));
 
         if (Health > 0f)
         {
@@ -219,7 +244,7 @@ public class Zombie : MonoBehaviour, IDamageable
         float timer = 0f;
         while (timer < _roamingMoveTimer)
         {
-            MoveTo(roamingTarget, MoveSpeed / 3.0f);
+            MoveTo(roamingTarget, _moveSpeed / 3.0f);
             timer += Time.deltaTime;
             if ((roamingTarget - transform.position).magnitude < 0.1f)
             {
@@ -240,7 +265,7 @@ public class Zombie : MonoBehaviour, IDamageable
         timer = 0f;
         while (timer < _roamingMoveTimer)
         {
-            MoveTo(_startPosition, MoveSpeed / 3.0f);
+            MoveTo(_startPosition, _moveSpeed / 3.0f);
             timer += Time.deltaTime;
             if ((roamingTarget - transform.position).magnitude < 0.1f)
             {
@@ -271,6 +296,13 @@ public class Zombie : MonoBehaviour, IDamageable
         _controller.enabled = false; // 더 이상 길을 막지 않고 총알도 맞지 않는다.
         yield return new WaitForSeconds(_deathTime);
         Destroy(gameObject);
+    }
+
+    // 체력은 이 함수로만 바꾼다. 바뀌면 구독자에게 알린다.
+    private void SetHealth(float health)
+    {
+        Health = health;
+        HealthChanged?.Invoke();
     }
 
     // 플레이어까지의 거리
