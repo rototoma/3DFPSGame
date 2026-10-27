@@ -135,7 +135,7 @@ MonoBehaviour:
   _attackDistance: 1.5
   _comebackDistance: 30
   _attackInterval: 2
-  _hitTime: 0.3
+  _hitTime: 3
   _deathTime: 2
   _roamingCoolTime: 1
   _roamingMoveTimer: 3
@@ -652,10 +652,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4493914613880827488, guid: 6dc4cf4496348884d8ee27743ae38562, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8418428206049181080}
   m_SourcePrefab: {fileID: 100100000, guid: 6dc4cf4496348884d8ee27743ae38562, type: 3}
 --- !u!4 &1038859455943515720 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 578376449398627443, guid: 6dc4cf4496348884d8ee27743ae38562, type: 3}
   m_PrefabInstance: {fileID: 462757485557236283}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4049190108086627419 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4493914613880827488, guid: 6dc4cf4496348884d8ee27743ae38562, type: 3}
+  m_PrefabInstance: {fileID: 462757485557236283}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8418428206049181080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4049190108086627419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bd32dd6113d7734aaeb332aa0ec9916, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterHitEvent
+  _zombie: {fileID: 33554165768057024}

@@ -56,6 +56,14 @@ public class Zombie : MonoBehaviour, IDamageable
     private Coroutine _hitCoroutine; // 실행 중인 피격
     private Coroutine _roamingCoroutine; // 실행 중인 배회
 
+    // 애니메이터 상태 이름 (Animator Controller의 State 이름과 같아야 한다)
+    private static readonly int IdleHash = Animator.StringToHash("Idle");
+    private static readonly int MoveHash = Animator.StringToHash("Move");
+    private static readonly int AttackDelayHash = Animator.StringToHash("AttackDelay");
+    private static readonly int AttackHash = Animator.StringToHash("Attack");
+    private static readonly int HitHash = Animator.StringToHash("Hit");
+    private static readonly int DeathHash = Animator.StringToHash("Death");
+
     private void OnEnable()
     {
         ZombieManager manager = ZombieManager.Instance;
@@ -129,7 +137,7 @@ public class Zombie : MonoBehaviour, IDamageable
         if (DistanceToPlayer() <= _detectDistance)
         {
             ChangeState(ZombieState.Trace);
-            _animator.SetTrigger("IdleToMove");
+            _animator.Play(MoveHash);
             return;
         }
 
@@ -137,7 +145,7 @@ public class Zombie : MonoBehaviour, IDamageable
         if (_roamingCoolDown < 0)
         {
             ChangeState(ZombieState.Roaming);
-            _animator.SetTrigger("IdleToMove");
+            _animator.Play(MoveHash);
             _roamingCoolDown = _roamingCoolTime;
         }
     }
@@ -165,7 +173,7 @@ public class Zombie : MonoBehaviour, IDamageable
         {
             _attackTimer = 0f; // 공격 상태가 되자마자 첫 공격을 한다.
             ChangeState(ZombieState.Attack);
-            _animator.SetTrigger("MoveToAttackDelay");
+            _animator.Play(AttackDelayHash);
             return;
         }
 
@@ -179,7 +187,7 @@ public class Zombie : MonoBehaviour, IDamageable
         {
             SetHealth(_maxHealth);
             ChangeState(ZombieState.Idle);
-            _animator.SetTrigger("MoveToIdle");
+            _animator.Play(IdleHash);
             return;
         }
 
@@ -194,19 +202,15 @@ public class Zombie : MonoBehaviour, IDamageable
         if (DistanceToPlayer() > _attackDistance)
         {
             ChangeState(ZombieState.Trace);
-            _animator.SetTrigger("AttackToMove");
+            _animator.Play(MoveHash);
             return;
         }
 
         _attackTimer -= Time.deltaTime;
         if (_attackTimer <= 0f)
         {
-            var closest = _player.GetComponent<Collider>().ClosestPoint(transform.position);
-            DamageInfo damageInfo =
-                new DamageInfo(_damage, closest, (gameObject.transform.position - closest).normalized);
             _attackTimer = _attackInterval;
-            _animator.SetTrigger("StartAttack");
-            _player.TakeDamage(damageInfo);
+            _animator.Play(AttackHash);
         }
     }
 
@@ -240,7 +244,6 @@ public class Zombie : MonoBehaviour, IDamageable
             bloodSpray.transform.forward = damageInfo.HitNormal;
 
             ChangeState(ZombieState.Hit);
-            _animator.SetTrigger("MoveToIdle");
             _hitCoroutine = StartCoroutine(Hit_Coroutine());
         }
         else
@@ -281,9 +284,12 @@ public class Zombie : MonoBehaviour, IDamageable
             yield return null;
         }
 
+        _animator.Play(IdleHash);
+
         yield return new WaitForSeconds(1.0f);
 
         timer = 0f;
+        _animator.Play(MoveHash); // Play는 호출할 때마다 처음부터 재생하므로 루프 밖에서 한 번만 부른다.
         while (timer < _roamingMoveTimer)
         {
             _agent.SetDestination(_startPosition);
@@ -303,22 +309,24 @@ public class Zombie : MonoBehaviour, IDamageable
         }
 
         ChangeState(ZombieState.Idle);
-        _animator.SetTrigger("MoveToIdle");
+        _animator.Play(IdleHash);
     }
 
     private IEnumerator Hit_Coroutine()
     {
         StopAgent();
+        _animator.Play(HitHash);
         yield return new WaitForSeconds(_hitTime); // 잠깐 멈칫한다.
 
         _hitCoroutine = null;
         ChangeState(ZombieState.Trace); // 맞았으니 쫓아간다.
-        _animator.SetTrigger("IdleToMove");
+        _animator.Play(MoveHash);
     }
 
     private IEnumerator Death_Coroutine()
     {
         StopAgent();
+        _animator.Play(DeathHash);
         yield return new WaitForSeconds(_deathTime);
         Destroy(gameObject);
     }
@@ -347,5 +355,13 @@ public class Zombie : MonoBehaviour, IDamageable
         {
             transform.forward = direction; // 가는 쪽을 바라본다.
         }
+    }
+
+    public void AttackAction()
+    {
+        var closest = _player.GetComponent<Collider>().ClosestPoint(transform.position);
+        DamageInfo damageInfo =
+            new DamageInfo(_damage, closest, (gameObject.transform.position - closest).normalized);
+        _player.TakeDamage(damageInfo);
     }
 }
