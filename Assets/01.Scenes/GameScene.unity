@@ -6038,7 +6038,7 @@ MonoBehaviour:
   m_IsOverridingCost: 0
   m_Bidirectional: 1
   m_AutoUpdatePosition: 0
-  m_Area: 0
+  m_Area: 2
 --- !u!1 &1800680718
 GameObject:
   m_ObjectHideFlags: 0

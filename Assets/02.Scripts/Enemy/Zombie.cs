@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -42,6 +43,10 @@ public class Zombie : MonoBehaviour, IDamageable
     [SerializeField] private float _roamingCoolTime = 1f; // idle에서 roaming으로 전환하는 간격
     [SerializeField] private float _roamingMoveTimer = 3f;
 
+    [Header("점프 (NavMeshLink)")]
+    [SerializeField] private float _jumpHeight = 1.5f; // 점프 포물선의 최고 높이 (m)
+    [SerializeField] private float _jumpDuration = 0.7f; // 링크를 건너는 데 걸리는 시간 (초)
+
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Animator _animator;
 
@@ -55,6 +60,8 @@ public class Zombie : MonoBehaviour, IDamageable
     private float _attackTimer; // 다음 공격까지 남은 시간
     private Coroutine _hitCoroutine; // 실행 중인 피격
     private Coroutine _roamingCoroutine; // 실행 중인 배회
+    private Coroutine _jumpCoroutine; // 실행 중인 점프
+    private int _jumpArea; // Jump Area Type 번호
 
     // 애니메이터 상태 이름 (Animator Controller의 State 이름과 같아야 한다)
     private static readonly int IdleHash = Animator.StringToHash("Idle");
@@ -86,6 +93,8 @@ public class Zombie : MonoBehaviour, IDamageable
     {
         _animator = GetComponentInChildren<Animator>();
         _agent = GetComponent<NavMeshAgent>();
+        _agent.autoTraverseOffMeshLink = false; // 링크는 Jump_Coroutine이 직접 건넌다.
+        _jumpArea = NavMesh.GetAreaFromName("Jump");
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>(); // 태그로 플레이어를 찾는다.
         _startPosition = transform.position;
         SetHealth(_maxHealth);
@@ -95,6 +104,15 @@ public class Zombie : MonoBehaviour, IDamageable
     {
         // Game Play상태가 아니라면 연산x
         if (GameManager.Instance.GameState != GameState.Playing) return;
+
+        // 링크 위에 서면 점프로 건너고, 건너는 동안은 다른 행동을 하지 않는다.
+        if (_state != ZombieState.Death && _jumpCoroutine == null && _agent.isOnOffMeshLink)
+        {
+            _jumpCoroutine = StartCoroutine(Jump_Coroutine());
+        }
+
+        if (_jumpCoroutine != null) return;
+
         // 지금 상태에 맞는 함수를 부른다.
         switch (_state)
         {
@@ -310,6 +328,43 @@ public class Zombie : MonoBehaviour, IDamageable
 
         ChangeState(ZombieState.Idle);
         _animator.Play(IdleHash);
+    }
+
+    // NavMeshLink를 건넌다. Jump 영역이면 포물선으로 점프하고, 그 외 영역은 직선으로 건넌다.
+    private IEnumerator Jump_Coroutine()
+    {
+        OffMeshLinkData linkData = _agent.currentOffMeshLinkData;
+        bool isJump = linkData.owner is NavMeshLink link && link.area == _jumpArea;
+        float height = isJump ? _jumpHeight : 0f;
+
+        Vector3 startPos = transform.position;
+        Vector3 endPos = linkData.endPos + Vector3.up * _agent.baseOffset;
+
+        Vector3 direction = endPos - startPos;
+        direction.y = 0f;
+        if (direction != Vector3.zero)
+        {
+            transform.forward = direction.normalized; // 가는 쪽을 바라본다.
+        }
+
+        float elapsed = 0f;
+        while (elapsed < _jumpDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / _jumpDuration);
+            Vector3 position = Vector3.Lerp(startPos, endPos, t);
+            position.y += 4f * height * t * (1f - t); // t=0.5에서 최고 높이 height
+            transform.position = position;
+            yield return null;
+        }
+
+        transform.position = endPos;
+        if (_agent.isOnOffMeshLink)
+        {
+            _agent.CompleteOffMeshLink();
+        }
+
+        _jumpCoroutine = null;
     }
 
     private IEnumerator Hit_Coroutine()
