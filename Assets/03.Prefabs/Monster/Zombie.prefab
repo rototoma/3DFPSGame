@@ -306,7 +306,7 @@ MonoBehaviour:
   _roamingCoolDown: 1
   _detectDistance: 8
   _attackDistance: 1.5
-  _comebackDistance: 15
+  _comebackDistance: 30
   _attackInterval: 2
   _hitTime: 0.3
   _deathTime: 2
