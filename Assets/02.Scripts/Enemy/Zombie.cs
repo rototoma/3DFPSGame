@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 public enum ZombieState
@@ -16,7 +17,7 @@ public enum ZombieState
 
 // 좀비 AI: 지금 상태에 따라 다른 행동을 한다. (유한 상태 머신)
 // 외부에서는 Zombie 목록·체력 조회를 ZombieManager(싱글톤)를 통해 한다.
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class Zombie : MonoBehaviour, IDamageable
 {
     [SerializeField] private GameObject _bloodSprayPrefab;
@@ -41,12 +42,13 @@ public class Zombie : MonoBehaviour, IDamageable
     [SerializeField] private float _roamingCoolTime = 1f; // idle에서 roaming으로 전환하는 간격
     [SerializeField] private float _roamingMoveTimer = 3f;
 
+    [SerializeField] private NavMeshAgent _agent;
+
     public ZombieState State => _state;
     public float MaxHealth => _maxHealth;
     public float Health { get; private set; } // 현재 체력
     public event Action HealthChanged; // 체력이 바뀔 때마다 호출
 
-    private CharacterController _controller;
     private Player _player;
     private Vector3 _startPosition; // 처음 자리
     private float _attackTimer; // 다음 공격까지 남은 시간
@@ -73,7 +75,7 @@ public class Zombie : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        _controller = GetComponent<CharacterController>();
+        _agent = GetComponent<NavMeshAgent>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>(); // 태그로 플레이어를 찾는다.
         _startPosition = transform.position;
         SetHealth(_maxHealth);
@@ -161,25 +163,26 @@ public class Zombie : MonoBehaviour, IDamageable
             return;
         }
 
-        MoveTo(_player.transform.position, _moveSpeed);
+        _agent.SetDestination(_player.transform.position);
     }
 
     // 복귀: 처음 자리로 걸어간다. 도착하면 체력을 채우고 다시 기다린다.
     private void Comeback()
     {
-        if (Vector3.Distance(transform.position, _startPosition) <= 0.5f)
+        if (Vector3.Distance(transform.position, _startPosition) < _agent.stoppingDistance)
         {
             SetHealth(_maxHealth);
             ChangeState(ZombieState.Idle);
             return;
         }
 
-        MoveTo(_startPosition, _moveSpeed);
+        _agent.SetDestination(_startPosition);
     }
 
     // 공격: 공격 간격마다 플레이어를 때린다.
     private void Attack()
     {
+        StopAgent();
         // 플레이어가 공격 거리 밖으로 나가면 다시 쫓아간다.
         if (DistanceToPlayer() > _attackDistance)
         {
@@ -196,6 +199,13 @@ public class Zombie : MonoBehaviour, IDamageable
             _attackTimer = _attackInterval;
             _player.TakeDamage(damageInfo);
         }
+    }
+
+
+    private void StopAgent()
+    {
+        _agent.ResetPath(); // 에이전트가 움직이지 않도록 멈춤
+        _agent.velocity = Vector3.zero; // 가속도를 0으로 (안 하면 미끄러짐)
     }
 
     // 대미지를 받는다. 이미 죽었으면 받지 않고 false를 돌려준다.
@@ -245,7 +255,7 @@ public class Zombie : MonoBehaviour, IDamageable
         float timer = 0f;
         while (timer < _roamingMoveTimer)
         {
-            MoveTo(roamingTarget, _moveSpeed / 3.0f);
+            _agent.SetDestination(roamingTarget);
             timer += Time.deltaTime;
             if ((roamingTarget - transform.position).magnitude < 0.1f)
             {
@@ -266,7 +276,7 @@ public class Zombie : MonoBehaviour, IDamageable
         timer = 0f;
         while (timer < _roamingMoveTimer)
         {
-            MoveTo(_startPosition, _moveSpeed / 3.0f);
+            _agent.SetDestination(_startPosition);
             timer += Time.deltaTime;
             if ((roamingTarget - transform.position).magnitude < 0.1f)
             {
@@ -287,14 +297,16 @@ public class Zombie : MonoBehaviour, IDamageable
 
     private IEnumerator Hit_Coroutine()
     {
+        StopAgent();
         yield return new WaitForSeconds(_hitTime); // 잠깐 멈칫한다.
+
         _hitCoroutine = null;
         ChangeState(ZombieState.Trace); // 맞았으니 쫓아간다.
     }
 
     private IEnumerator Death_Coroutine()
     {
-        _controller.enabled = false; // 더 이상 길을 막지 않고 총알도 맞지 않는다.
+        StopAgent();
         yield return new WaitForSeconds(_deathTime);
         Destroy(gameObject);
     }
@@ -323,7 +335,5 @@ public class Zombie : MonoBehaviour, IDamageable
         {
             transform.forward = direction; // 가는 쪽을 바라본다.
         }
-
-        _controller.SimpleMove(direction * moveSpeed); // 중력은 SimpleMove가 넣어 준다.
     }
 }
