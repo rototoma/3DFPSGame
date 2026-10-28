@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EmaceArt_WaterMaterial
+  m_Shader: {fileID: 4800000, guid: 9ab0bc142fdeec3448812d184130909d, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _BLENDMODE_MULTIPLY
+  - _CAUSTICENABLED_ON
+  - _CELENABLED_ON
+  - _POLYENABLED_ON
+  - _REFLENABLED_ON
+  - _SCATTERENABLED_ON
+  - _SWAMP_ALGAE
+  - _SWAMP_BUBBLES
+  - _SWAMP_ON
+  - _SWAMP_SCUM
+  - _SWAMP_SILT
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _NoiseTex:
+        m_Texture: {fileID: 2800000, guid: a7c4d56ded07bdd4d810fa91a56e62d8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _CausticEnabled: 1
+    - _CausticScale: 1.73
+    - _CausticSharpness: 5.37
+    - _CausticStrength: 0.257
+    - _CelBias: 1.12
+    - _CelEnabled: 1
+    - _CelSteps: 2.14
+    - _Depth: 0.4
+    - _Gloss: 0.504
+    - _Mem_Cel_Bias: 1.69
+    - _Mem_Cel_Steps: 3.01
+    - _Mem_Grad_Bias: 1.87
+    - _Mem_Grad_Steps: 5.07
+    - _NoiseIntensity: 0.206
+    - _OpacityIntensity: 0.024
+    - _PolyDensity: 18.6
+    - _PolyEnabled: 1
+    - _PolyNormalAmp: 10
+    - _PolySpeed: 0.4
+    - _PolyStrength: 0
+    - _PolyVariance: 1
+    - _ReflBrightness: 0.631
+    - _ReflDensity: 0.308
+    - _ReflEnabled: 1
+    - _ReflScale: 3.72
+    - _ReflSharpness: 32
+    - _ReflSpeed: -1.1
+    - _RefractStrength: 0.0167
+    - _ScaleNoise: -0.09
+    - _ScatterDensity: 0.432
+    - _ScatterEnabled: 1
+    - _ScatterOpacity: 0.691
+    - _ScatterScale: 0.58
+    - _ScatterSpeed: 0.08
+    - _ShoreGlow: 0.582
+    - _ShoreWidth: 0.486
+    - _SizeFoam: 0.965
+    - _Specular: 0.45
+    - _Speed: 0.02
+    - _SwampMurkiness: 0.418
+    - _SwampOn: 0
+    - _WaveHeight: 0.01
+    - _WaveScale: 1
+    - _WaveSpeed: 0.8
+    m_Colors:
+    - _DepthColor: {r: 0.03, g: 0.2, b: 0.45, a: 1}
+    - _FoamColor: {r: 0.95, g: 0.97, b: 1, a: 1}
+    - _SwampDepthColor: {r: 0.1, g: 0.2, b: 0.08, a: 1}
+    - _SwampFoamColor: {r: 0.62, g: 0.65, b: 0.42, a: 1}
+    - _SwampMurkColor: {r: 0.2, g: 0.28, b: 0.1, a: 1}
+    - _SwampWaterColor: {r: 0.28, g: 0.4, b: 0.14, a: 0.9}
+    - _WaterColor: {r: 0.13, g: 0.68, b: 0.63, a: 0.72}
+  m_BuildTextureStacks: []
+--- !u!114 &5306914763222876447
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7

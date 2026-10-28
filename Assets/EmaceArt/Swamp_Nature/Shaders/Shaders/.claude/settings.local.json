@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"require\\('docx'\\); console.log\\('ok'\\)\")",
+      "Bash(npm install:*)",
+      "Bash(node -e \"const m = require\\('docx'\\); console.log\\(Object.keys\\(m\\).slice\\(0,10\\).join\\(','\\)\\)\")",
+      "Bash(npm root:*)",
+      "Bash(node -e \"const m = require\\('C:/Users/emace/AppData/Roaming/npm/node_modules/docx'\\); console.log\\('ok'\\)\")",
+      "Bash(node \"C:\\\\Users\\\\emace\\\\AppData\\\\Temp\\\\gen_manual.js\")",
+      "Bash(dir /s /b \"H:\\\\EmaceArtCompany\\\\EmaceArt_AssetStore\\\\AssetStore_PUBLISHED\\\\Swamp Remake\\\\Unity\\\\LowPolyNatureProject_Swamp_remaster\\\\Assets\\\\EmaceArt\\\\Swamp_Nature\\\\*.shader\")",
+      "PowerShell(Get-ChildItem -Path \"H:\\\\EmaceArtCompany\\\\EmaceArt_AssetStore\\\\AssetStore_PUBLISHED\\\\Swamp Remake\\\\Unity\\\\LowPolyNatureProject_Swamp_remaster\\\\Assets\\\\EmaceArt\\\\Swamp_Nature\" -Recurse | Where-Object { $_.Extension -in \".shader\",\".cs\",\".hlsl\" } | Select-Object FullName)"
+    ]
+  }
+}
