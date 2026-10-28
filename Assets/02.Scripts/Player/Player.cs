@@ -10,7 +10,7 @@ public class Player : MonoBehaviour, IDamageable
     public void Start()
     {
         _animator = GetComponentInChildren<Animator>();
-        _injuredLayerIndex = _animator.GetLayerIndex("Injured");
+        _injuredLayerIndex = _animator.GetLayerIndex("Injured Layer");
     }
 
     public event Action OnDamaged = null;
@@ -25,7 +25,7 @@ public class Player : MonoBehaviour, IDamageable
         float maxHealth = PlayerManager.Instance.PlayerPublicMaxHealth;
         float currentHealth = PlayerManager.Instance.PlayerHealth;
 
-        float injured = Mathf.InverseLerp(1f, 0f, currentHealth / maxHealth);
+        float injured = Mathf.InverseLerp(0.5f, 0f, currentHealth / maxHealth);
         _animator.SetLayerWeight(_injuredLayerIndex, injured);
 
         OnDamaged?.Invoke();
