@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
     private const float PlayerMaxStamina = 10f;
     public float PlayerStamina { get; private set; }
     private const float PlayerMaxHealth = 100f;
+    public float PlayerPublicMaxHealth => PlayerMaxHealth;
     public float PlayerHealth { get; private set; }
 
     [SerializeField] private UI_ScreenEffect _hitScreen;
