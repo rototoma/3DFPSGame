@@ -1,3 +1,4 @@
+using System;
 using Lean.Pool;
 using UnityEngine;
 
@@ -13,6 +14,12 @@ public class PlayerBombFire : MonoBehaviour
 
     [SerializeField] private Transform _firePoint;
     [SerializeField] private Bomb _bombPrefab;
+    private Animator _animator; // 군인 모델의 애니메이터
+
+    private void Start()
+    {
+        _animator = GetComponentInChildren<Animator>();
+    }
 
     private void Update()
     {
@@ -27,6 +34,7 @@ public class PlayerBombFire : MonoBehaviour
         if (Input.GetButtonUp("Fire2"))
         {
             Shoot(_fireCharge);
+            _animator.SetTrigger("Throw"); // 군인이 쏘는 동작을 한다.
             _isCharging = false;
             _fireCharge = 0;
         }
@@ -41,7 +49,7 @@ public class PlayerBombFire : MonoBehaviour
     {
         if (_currentBomb >= _maxBombs) return;
 
-        Bomb bomb = Lean.Pool.LeanPool.Spawn(_bombPrefab, _firePoint.position, Quaternion.identity);
+        Bomb bomb = LeanPool.Spawn(_bombPrefab, _firePoint.position, Quaternion.identity);
         bomb.Init(this);
         _currentBomb++;
 

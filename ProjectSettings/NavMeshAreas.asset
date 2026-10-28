@@ -15,8 +15,8 @@ NavMeshProjectSettings:
     cost: 4
   - name: Ground
     cost: 1
-  - name: 
-    cost: 1
+  - name: Swamp
+    cost: 5
   - name: 
     cost: 1
   - name: 
