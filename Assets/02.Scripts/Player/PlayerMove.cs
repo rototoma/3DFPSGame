@@ -19,12 +19,16 @@ public class PlayerMove : MonoBehaviour
     private float _lastGroundedTime = float.NegativeInfinity;
     private float _lastJumpPressedTime = float.NegativeInfinity;
 
+    private Animator _animator; // 군인 모델의 동작을 바꿔 주는 컴포넌트
+
     private void Awake()
     {
         if (_controller == null)
         {
             _controller = GetComponent<CharacterController>();
         }
+
+        _animator = GetComponentInChildren<Animator>(); // 자식인 Model에 붙어 있다.
     }
 
     private void Update()
@@ -45,6 +49,7 @@ public class PlayerMove : MonoBehaviour
         Vector3 direction = new Vector3(h, 0, v);
         direction.Normalize();
         direction = transform.TransformDirection(direction); // 로컬 좌표계
+        _animator.SetFloat("MoveMotion", direction.magnitude); // 움직이면 1, 멈추면 0
 
         // 3. 바닥에 서 있으면 떨어지는 속도를 초기화하고 점프횟수도 초기화
         if (_controller.isGrounded && _yVelocity <= 0f)

@@ -15,6 +15,8 @@ public class CameraViewSwitcher : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.GameState != GameState.Playing) return;
+
         if (Input.GetKeyDown(_switchKey))
         {
             switch (_cameraFollow.ViewMode)

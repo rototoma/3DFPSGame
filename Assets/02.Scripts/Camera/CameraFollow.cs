@@ -46,6 +46,8 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (GameManager.Instance.GameState != GameState.Playing) return;
+
         if (_target == null)
         {
             return;

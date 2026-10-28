@@ -15,6 +15,9 @@ public class UI_PlayerStats : MonoBehaviour
         _healthSlider.maxValue = PlayerManager.Instance.PlayerHealth;
 
         _player.OnDamaged += RefreshUI;
+
+        // 시작 시 슬라이더 값을 현재 체력/스태미나로 초기화
+        RefreshUI();
     }
 
     public void RefreshUI()

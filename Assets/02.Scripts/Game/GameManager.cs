@@ -16,8 +16,10 @@ public class GameManager : MonoBehaviour
 
     private GameState _gameState = GameState.Ready;
     public GameState GameState => _gameState;
+
     [SerializeField] private TextMeshProUGUI _stateText;
     [SerializeField] private UI_ScreenEffect _screenEffect;
+    [SerializeField] private Animator _playerAnimator;
 
     private void Awake()
     {
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
         _stateText.gameObject.SetActive(true);
         _stateText.SetText("실패....");
         _screenEffect.Grad();
+        _playerAnimator.SetFloat("MoveMotion", 0f); // 달리던 중이었어도 서 있는 동작으로 돌린다.
     }
 
     private IEnumerator StartSequence_Coroutine()

@@ -29,14 +29,13 @@ public class PlayerGunFire : MonoBehaviour
     private float _fireCoolDown = 0;
     private int _bulletCount = 0;
 
+    private Animator _animator; // 군인 모델의 애니메이터
+
     private void Awake()
     {
         SetUpTracer();
-    }
-
-    private void Start()
-    {
         _bulletCount = _maxBulletCount;
+        _animator = GetComponentInChildren<Animator>();
     }
 
     // 총알이 날아간 선을 그릴 LineRenderer를 준비한다. 평소에는 꺼 둔다.
@@ -81,6 +80,10 @@ public class PlayerGunFire : MonoBehaviour
         if (Input.GetButton("Fire1") && _bulletCount > 0)
         {
             Fire();
+            if (_animator.GetFloat("MoveMotion") == 0f)
+            {
+                _animator.SetTrigger("Attack"); // 군인이 쏘는 동작을 한다.
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.R))
