@@ -82,8 +82,12 @@ public class PlayerGunFire : MonoBehaviour
             Fire();
             if (_animator.GetFloat("MoveMotion") == 0f)
             {
-                _animator.SetTrigger("Attack"); // 군인이 쏘는 동작을 한다.
+                _animator.SetBool("Fire", true); // 군인이 쏘는 동작을 한다.
             }
+        }
+        else
+        {
+            _animator.SetBool("Fire", false);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
