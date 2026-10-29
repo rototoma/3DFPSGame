@@ -19,6 +19,9 @@ public class PlayerGunFire : MonoBehaviour
     [SerializeField] private float _tracerDuration = 0.2f; // 마우스를 뗀 뒤 선이 남아 있는 시간 (초)
     [SerializeField] private Vector3 _tracerStartOffset = new Vector3(0.2f, -0.2f, 0.5f);
 
+    [SerializeField] private GameObject[] _muzzleFlashes;
+    [SerializeField] private float _flashTime;
+
     private LineRenderer _tracer;
     private float _tracerTimer;
 
@@ -129,6 +132,7 @@ public class PlayerGunFire : MonoBehaviour
 
         _bulletCount--;
         BulletCountChanged?.Invoke(_bulletCount, _maxBulletCount);
+        StartCoroutine(Co_MuzzleFlash());
         _fireCoolDown = _fireInterval;
 
         // 4. 부딪힌 물체가 있다면 이펙트 표시하고 대미지 주기
@@ -150,5 +154,15 @@ public class PlayerGunFire : MonoBehaviour
         _bulletCount = _maxBulletCount;
         BulletCountChanged?.Invoke(_bulletCount, _maxBulletCount);
         _reloadCoroutine = null;
+    }
+
+    private IEnumerator Co_MuzzleFlash()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, _muzzleFlashes.Length);
+        GameObject flash = _muzzleFlashes[randomIndex];
+        flash.SetActive(true);
+
+        yield return new WaitForSeconds(_flashTime);
+        flash.SetActive(false);
     }
 }

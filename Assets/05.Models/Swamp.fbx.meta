@@ -3,7 +3,12 @@ guid: 949073970b7252b40b6118458b9eaefa
 ModelImporter:
   serializedVersion: 24300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Luquid
+    second: {fileID: 2100000, guid: c193eaa481cb0cc49aea6a53bcdc1462, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
