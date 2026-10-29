@@ -14,6 +14,7 @@ public class PlayerManager : MonoBehaviour
     public WeaponMode PlayerWeaponMode = WeaponMode.Normal;
 
     [SerializeField] private UI_ScreenEffect _hitScreen;
+    [SerializeField] private UI_PlayerWeapons _weaponUI;
 
     private void Awake()
     {
@@ -70,5 +71,6 @@ public class PlayerManager : MonoBehaviour
     public void ChangeWeaponMode(WeaponMode mode)
     {
         PlayerWeaponMode = mode;
+        _weaponUI.RefreshWeapon(mode);
     }
 }

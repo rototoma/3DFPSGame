@@ -14,6 +14,7 @@ public class PlayerBombFire : MonoBehaviour
 
     [SerializeField] private Transform _firePoint;
     [SerializeField] private Bomb _bombPrefab;
+    [SerializeField] private UI_PlayerWeapons _playerWeapons;
     private Animator _animator; // 군인 모델의 애니메이터
 
     private void Start()
@@ -52,6 +53,7 @@ public class PlayerBombFire : MonoBehaviour
         Bomb bomb = LeanPool.Spawn(_bombPrefab, _firePoint.position, Quaternion.identity);
         bomb.Init(this);
         _currentBomb++;
+        _playerWeapons.RefreshBomb(_currentBomb, _maxBombs);
 
         Rigidbody rigidbody = bomb.GetComponent<Rigidbody>();
         rigidbody.AddForce((fireCharge * _chargeMultiplier + _throwPower) * Camera.main.transform.forward,
@@ -61,5 +63,6 @@ public class PlayerBombFire : MonoBehaviour
     public void BombDestroyed()
     {
         _currentBomb--;
+        _playerWeapons.RefreshBomb(_currentBomb, _maxBombs);
     }
 }
