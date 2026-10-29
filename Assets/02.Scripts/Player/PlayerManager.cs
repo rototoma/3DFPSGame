@@ -14,7 +14,9 @@ public class PlayerManager : MonoBehaviour
     public WeaponMode PlayerWeaponMode = WeaponMode.Normal;
 
     [SerializeField] private UI_ScreenEffect _hitScreen;
-    [SerializeField] private UI_PlayerWeapons _weaponUI;
+
+    // 옵저버: 무기가 교체되면 UI 등 구독자에게 알린다.
+    public event Action<WeaponMode> WeaponModeChanged;
 
     private void Awake()
     {
@@ -71,6 +73,6 @@ public class PlayerManager : MonoBehaviour
     public void ChangeWeaponMode(WeaponMode mode)
     {
         PlayerWeaponMode = mode;
-        _weaponUI.RefreshWeapon(mode);
+        WeaponModeChanged?.Invoke(mode);
     }
 }

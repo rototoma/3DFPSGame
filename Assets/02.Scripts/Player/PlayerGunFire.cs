@@ -18,7 +18,6 @@ public class PlayerGunFire : MonoBehaviour
     [SerializeField] private float _tracerWidth = 0.03f;
     [SerializeField] private float _tracerDuration = 0.2f; // 마우스를 뗀 뒤 선이 남아 있는 시간 (초)
     [SerializeField] private Vector3 _tracerStartOffset = new Vector3(0.2f, -0.2f, 0.5f);
-    [SerializeField] private UI_PlayerWeapons _playerWeapons;
 
     private LineRenderer _tracer;
     private float _tracerTimer;
@@ -28,6 +27,12 @@ public class PlayerGunFire : MonoBehaviour
     private float _fireInterval = 0.1f;
     private float _fireCoolDown = 0;
     private int _bulletCount = 0;
+
+    public int BulletCount => _bulletCount;
+    public int MaxBulletCount => _maxBulletCount;
+
+    // 옵저버: 총알 수가 바뀌면 (현재, 최대)를 구독자에게 알린다.
+    public event Action<int, int> BulletCountChanged;
 
     private Animator _animator; // 군인 모델의 애니메이터
 
@@ -123,7 +128,7 @@ public class PlayerGunFire : MonoBehaviour
         if (_fireCoolDown > 0) return;
 
         _bulletCount--;
-        _playerWeapons.RefreshBullet(_bulletCount, _maxBulletCount);
+        BulletCountChanged?.Invoke(_bulletCount, _maxBulletCount);
         _fireCoolDown = _fireInterval;
 
         // 4. 부딪힌 물체가 있다면 이펙트 표시하고 대미지 주기
@@ -143,7 +148,7 @@ public class PlayerGunFire : MonoBehaviour
         yield return new WaitForSeconds(_reloadTime);
 
         _bulletCount = _maxBulletCount;
-        _playerWeapons.RefreshBullet(_bulletCount, _maxBulletCount);
+        BulletCountChanged?.Invoke(_bulletCount, _maxBulletCount);
         _reloadCoroutine = null;
     }
 }
