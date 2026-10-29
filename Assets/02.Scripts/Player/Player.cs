@@ -13,6 +13,19 @@ public class Player : MonoBehaviour, IDamageable
         _injuredLayerIndex = _animator.GetLayerIndex("Injured Layer");
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            PlayerManager.Instance.ChangeWeaponMode(WeaponMode.Normal);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            PlayerManager.Instance.ChangeWeaponMode(WeaponMode.Sniper);
+        }
+    }
+
     public event Action OnDamaged = null;
 
     public void TakeDamage(DamageInfo damageInfo)

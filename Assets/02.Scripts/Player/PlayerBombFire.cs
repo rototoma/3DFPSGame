@@ -31,7 +31,7 @@ public class PlayerBombFire : MonoBehaviour
             _isCharging = true;
         }
 
-        if (Input.GetButtonUp("Fire2"))
+        if (Input.GetButtonUp("Fire2") && PlayerManager.Instance.PlayerWeaponMode == WeaponMode.Normal)
         {
             Shoot(_fireCharge);
             _animator.SetTrigger("Throw"); // 군인이 쏘는 동작을 한다.

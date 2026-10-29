@@ -11,6 +11,8 @@ public class PlayerManager : MonoBehaviour
     public float PlayerPublicMaxHealth => PlayerMaxHealth;
     public float PlayerHealth { get; private set; }
 
+    public WeaponMode PlayerWeaponMode = WeaponMode.Normal;
+
     [SerializeField] private UI_ScreenEffect _hitScreen;
 
     private void Awake()
@@ -63,5 +65,10 @@ public class PlayerManager : MonoBehaviour
 
         PlayerStamina -= amount;
         return true;
+    }
+
+    public void ChangeWeaponMode(WeaponMode mode)
+    {
+        PlayerWeaponMode = mode;
     }
 }
