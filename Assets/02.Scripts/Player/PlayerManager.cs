@@ -12,6 +12,7 @@ public class PlayerManager : MonoBehaviour
     public float PlayerHealth { get; private set; }
 
     public WeaponMode PlayerWeaponMode = WeaponMode.Normal;
+    public MeleeHitMode PlayerMeleeHitMode = MeleeHitMode.Collider;
 
     [SerializeField] private UI_ScreenEffect _hitScreen;
 

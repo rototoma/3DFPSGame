@@ -10,6 +10,9 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     [SerializeField] private Collider _collider;
 
+    [Header("부채꼴")]
+    [SerializeField] private float _range = 2f;
+    [SerializeField] private float _angle = 90f;
 
     private void Awake()
     {
@@ -25,7 +28,6 @@ public class PlayerMeleeAttack : MonoBehaviour
 
         if (Input.GetButton("Fire1"))
         {
-            Attack();
             _animator.SetBool("Slash", true);
         }
 
@@ -33,10 +35,5 @@ public class PlayerMeleeAttack : MonoBehaviour
         {
             _animator.SetBool("Slash", false);
         }
-    }
-
-
-    public void Attack()
-    {
     }
 }

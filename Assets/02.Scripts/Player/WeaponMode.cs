@@ -4,3 +4,10 @@ public enum WeaponMode
     Sniper, //저격모드 (조준경)
     Melee,
 }
+
+
+public enum MeleeHitMode
+{
+    Collider,
+    Fan,
+}
