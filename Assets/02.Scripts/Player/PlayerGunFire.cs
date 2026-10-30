@@ -84,6 +84,8 @@ public class PlayerGunFire : MonoBehaviour
         if (GameManager.Instance.GameState != GameState.Playing) return;
         _fireCoolDown -= Time.deltaTime;
 
+        if (PlayerManager.Instance.PlayerWeaponMode == WeaponMode.Melee) return;
+
         // 1. 마우스 왼쪽 버튼을 누르고 있는 동안은 매 프레임 조준선을 갱신하고, 발사 간격마다 쏜다.
         if (Input.GetButton("Fire1") && _bulletCount > 0)
         {
@@ -158,6 +160,8 @@ public class PlayerGunFire : MonoBehaviour
 
     private IEnumerator Co_MuzzleFlash()
     {
+        if (_muzzleFlashes.Length == 0) yield break;
+
         int randomIndex = UnityEngine.Random.Range(0, _muzzleFlashes.Length);
         GameObject flash = _muzzleFlashes[randomIndex];
         flash.SetActive(true);

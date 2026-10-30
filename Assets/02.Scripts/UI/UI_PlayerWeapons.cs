@@ -7,6 +7,8 @@ public class UI_PlayerWeapons : MonoBehaviour
 {
     [SerializeField] private Image _shotGunImg;
     [SerializeField] private Image _sniperImg;
+    [SerializeField] private Image _meleeImg;
+
     [SerializeField] private TextMeshProUGUI _bulletText;
     [SerializeField] private TextMeshProUGUI _bombText;
     [SerializeField] private PlayerGunFire _gunFire;
@@ -48,6 +50,11 @@ public class UI_PlayerWeapons : MonoBehaviour
         {
             _shotGunImg.gameObject.SetActive(true);
             _sniperImg.gameObject.SetActive(false);
+        }
+        else if (mode == WeaponMode.Sniper)
+        {
+            _shotGunImg.gameObject.SetActive(false);
+            _sniperImg.gameObject.SetActive(true);
         }
         else
         {

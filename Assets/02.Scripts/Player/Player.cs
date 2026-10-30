@@ -24,6 +24,11 @@ public class Player : MonoBehaviour, IDamageable
         {
             PlayerManager.Instance.ChangeWeaponMode(WeaponMode.Sniper);
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            PlayerManager.Instance.ChangeWeaponMode(WeaponMode.Melee);
+        }
     }
 
     public event Action OnDamaged = null;
