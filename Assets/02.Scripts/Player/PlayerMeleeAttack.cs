@@ -28,7 +28,8 @@ public class PlayerMeleeAttack : MonoBehaviour
             Attack();
             _animator.SetBool("Slash", true);
         }
-        else
+
+        if (Input.GetButtonUp("Fire1"))
         {
             _animator.SetBool("Slash", false);
         }

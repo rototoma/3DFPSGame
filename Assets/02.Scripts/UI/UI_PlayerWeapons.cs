@@ -50,16 +50,19 @@ public class UI_PlayerWeapons : MonoBehaviour
         {
             _shotGunImg.gameObject.SetActive(true);
             _sniperImg.gameObject.SetActive(false);
+            _meleeImg.gameObject.SetActive(false);
         }
         else if (mode == WeaponMode.Sniper)
         {
             _shotGunImg.gameObject.SetActive(false);
             _sniperImg.gameObject.SetActive(true);
+            _meleeImg.gameObject.SetActive(false);
         }
         else
         {
             _shotGunImg.gameObject.SetActive(false);
-            _sniperImg.gameObject.SetActive(true);
+            _sniperImg.gameObject.SetActive(false);
+            _meleeImg.gameObject.SetActive(true);
         }
     }
 
