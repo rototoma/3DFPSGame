@@ -132,6 +132,10 @@ PrefabInstance:
       value: EA_Swamp_Island_Small_05e_PRE
       objectReference: {fileID: 0}
     - target: {fileID: 8075583818496299121, guid: 5f66428af2452de4bb9bd7ca19eec44a, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075583818496299121, guid: 5f66428af2452de4bb9bd7ca19eec44a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
       objectReference: {fileID: 0}
@@ -212,6 +216,13 @@ Transform:
   - {fileID: 154453461}
   - {fileID: 962514390}
   - {fileID: 827109317}
+  - {fileID: 620427166}
+  - {fileID: 102493576}
+  - {fileID: 1229470597}
+  - {fileID: 1227294603}
+  - {fileID: 2022394129}
+  - {fileID: 2009533290}
+  - {fileID: 1427156960}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &14282530
@@ -715,6 +726,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4823283943531236227, guid: 35f75b00a323be944bde46cc19d2a11a, type: 3}
   m_PrefabInstance: {fileID: 2110630480}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &77759233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 77759235}
+  - component: {fileID: 77759234}
+  m_Layer: 0
+  m_Name: ZombieSpawner (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 1
+  m_IsActive: 1
+--- !u!114 &77759234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77759233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8705536f334cf4674d2ce51fc361b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZombieSpawner
+  _zombiePrefab: {fileID: 33554165768057024, guid: 70dce79a9c5aea54588da3fca8d7b92c, type: 3}
+  _spawnPoints:
+  - {fileID: 1229470597}
+  - {fileID: 1227294603}
+  _maxAliveCount: 4
+  _spawnInterval: 3
+--- !u!4 &77759235
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77759233}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &81703989
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,6 +850,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400076, guid: c5e80ba8acef9874e846c2424cf2ed5f, type: 3}
   m_PrefabInstance: {fileID: 2097741988}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &102493575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 102493576}
+  m_Layer: 0
+  m_Name: SpawnPoint (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &102493576
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102493575}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.89879405, z: -0, w: -0.43837118}
+  m_LocalPosition: {x: 23.26441, y: -1.851429, z: 12.92514}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 12952912}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &114814053
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -972,6 +1064,10 @@ PrefabInstance:
     - target: {fileID: 3585405084772454250, guid: e9ed89ef10a318845b45931393468d7b, type: 3}
       propertyPath: m_Name
       value: EA_Swamp_Mud_01a_PRE (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3585405084772454250, guid: e9ed89ef10a318845b45931393468d7b, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3585405084772454250, guid: e9ed89ef10a318845b45931393468d7b, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1411,6 +1507,10 @@ PrefabInstance:
       value: EA_Swamp_RockBig_Moss_01b_PRE
       objectReference: {fileID: 0}
     - target: {fileID: 8368343184799640878, guid: d6c8583eec6359c4aa24ce62c54f138e, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8368343184799640878, guid: d6c8583eec6359c4aa24ce62c54f138e, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
       objectReference: {fileID: 0}
@@ -1847,7 +1947,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 7159
+    m_Bits: 15351
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1986,6 +2086,10 @@ PrefabInstance:
     - target: {fileID: 3585405084772454250, guid: e9ed89ef10a318845b45931393468d7b, type: 3}
       propertyPath: m_Name
       value: EA_Swamp_Mud_01a_PRE
+      objectReference: {fileID: 0}
+    - target: {fileID: 3585405084772454250, guid: e9ed89ef10a318845b45931393468d7b, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3585405084772454250, guid: e9ed89ef10a318845b45931393468d7b, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2283,6 +2387,10 @@ PrefabInstance:
       value: A_Swamp_Clif_01a_PRE
       objectReference: {fileID: 0}
     - target: {fileID: 2325200962493670563, guid: 04516c15a8698aa40984e4bd8b09aaee, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 2325200962493670563, guid: 04516c15a8698aa40984e4bd8b09aaee, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
       objectReference: {fileID: 0}
@@ -2492,13 +2600,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 21.5, y: 35.8, z: -37.3}
+  m_LocalRotation: {x: 0.30767393, y: -0.6604938, z: 0.39983046, w: 0.5560758}
+  m_LocalPosition: {x: 38.6, y: 25, z: -15.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 60.499, y: -97.213, z: 4.454}
 --- !u!114 &410087042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2841,6 +2949,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1353256691}
     m_Modifications:
     - target: {fileID: 3613429810897390377, guid: 57fba482d8e0b0440945c1e6fd07c1e0, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3613429810897390377, guid: 57fba482d8e0b0440945c1e6fd07c1e0, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
       objectReference: {fileID: 0}
@@ -2849,8 +2961,16 @@ PrefabInstance:
       value: EA_Bld_Wood_Floor_02a_PRE
       objectReference: {fileID: 0}
     - target: {fileID: 3624528412528746908, guid: 57fba482d8e0b0440945c1e6fd07c1e0, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3624528412528746908, guid: 57fba482d8e0b0440945c1e6fd07c1e0, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890567436203440431, guid: 57fba482d8e0b0440945c1e6fd07c1e0, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3890567436203440431, guid: 57fba482d8e0b0440945c1e6fd07c1e0, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2895,6 +3015,10 @@ PrefabInstance:
     - target: {fileID: 4109316748931922726, guid: 57fba482d8e0b0440945c1e6fd07c1e0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7332789210813900916, guid: 57fba482d8e0b0440945c1e6fd07c1e0, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7332789210813900916, guid: 57fba482d8e0b0440945c1e6fd07c1e0, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -3329,6 +3453,10 @@ PrefabInstance:
       value: EA_Swamp_Island_01a_PRE
       objectReference: {fileID: 0}
     - target: {fileID: 6169470095408877998, guid: a1e01b525d79dd048bf7a6cb0781fae3, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6169470095408877998, guid: a1e01b525d79dd048bf7a6cb0781fae3, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
       objectReference: {fileID: 0}
@@ -3716,6 +3844,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 620223414}
   m_CullTransparentMesh: 1
+--- !u!1 &620427165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 620427166}
+  m_Layer: 0
+  m_Name: SpawnPoint (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &620427166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620427165}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.819152, z: -0, w: 0.57357645}
+  m_LocalPosition: {x: 23.390163, y: -0.72814083, z: 0.47464752}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 12952912}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &626078878
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4178,6 +4337,10 @@ PrefabInstance:
       value: EA_Swamp_RockBig_Moss_01a_PRE
       objectReference: {fileID: 0}
     - target: {fileID: 6136626774298472480, guid: 97f4288cb4300434c95412e8f1427477, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136626774298472480, guid: 97f4288cb4300434c95412e8f1427477, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
       objectReference: {fileID: 0}
@@ -4246,6 +4409,10 @@ PrefabInstance:
     - target: {fileID: 6987582444371241273, guid: ea6a542be797bb04797f616a4cc694bb, type: 3}
       propertyPath: m_Name
       value: EA_Swamp_Clif_03a_PRE
+      objectReference: {fileID: 0}
+    - target: {fileID: 6987582444371241273, guid: ea6a542be797bb04797f616a4cc694bb, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6987582444371241273, guid: ea6a542be797bb04797f616a4cc694bb, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -4427,12 +4594,24 @@ PrefabInstance:
       value: EA_Swamp_Terrain_Rock_Small_01b_PRE
       objectReference: {fileID: 0}
     - target: {fileID: 1045842670172072894, guid: 742133059d509c64a9c3064fa421c162, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1045842670172072894, guid: 742133059d509c64a9c3064fa421c162, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3470059476557042330, guid: 742133059d509c64a9c3064fa421c162, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3470059476557042330, guid: 742133059d509c64a9c3064fa421c162, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866026809578953053, guid: 742133059d509c64a9c3064fa421c162, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5866026809578953053, guid: 742133059d509c64a9c3064fa421c162, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -4441,6 +4620,10 @@ PrefabInstance:
     - target: {fileID: 6230322442194976164, guid: 742133059d509c64a9c3064fa421c162, type: 3}
       propertyPath: m_Convex
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8980366849409914920, guid: 742133059d509c64a9c3064fa421c162, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8980366849409914920, guid: 742133059d509c64a9c3064fa421c162, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -4820,6 +5003,10 @@ PrefabInstance:
     - target: {fileID: 6395958258086112980, guid: 05c44e750e9821445b265e60366c7798, type: 3}
       propertyPath: m_Name
       value: EA_Swamp_Stones_01c_PRE
+      objectReference: {fileID: 0}
+    - target: {fileID: 6395958258086112980, guid: 05c44e750e9821445b265e60366c7798, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6395958258086112980, guid: 05c44e750e9821445b265e60366c7798, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -5270,8 +5457,16 @@ PrefabInstance:
       value: EA_Pier1_end_PRE
       objectReference: {fileID: 0}
     - target: {fileID: 1593521461530894, guid: d9506ec0207db5d44a64f4e879f34af6, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1593521461530894, guid: d9506ec0207db5d44a64f4e879f34af6, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975525047979612, guid: d9506ec0207db5d44a64f4e879f34af6, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1975525047979612, guid: d9506ec0207db5d44a64f4e879f34af6, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -5448,6 +5643,10 @@ PrefabInstance:
     - target: {fileID: 5608610400370266291, guid: 8e2adcb081686e64086dfedf83eb83d1, type: 3}
       propertyPath: m_Name
       value: EA_Swamp_Island_Small_05c_PRE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5608610400370266291, guid: 8e2adcb081686e64086dfedf83eb83d1, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5608610400370266291, guid: 8e2adcb081686e64086dfedf83eb83d1, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -7525,6 +7724,55 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &1186515680
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1186515682}
+  - component: {fileID: 1186515681}
+  m_Layer: 0
+  m_Name: ZombieSpawner (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 1
+  m_IsActive: 1
+--- !u!114 &1186515681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186515680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8705536f334cf4674d2ce51fc361b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZombieSpawner
+  _zombiePrefab: {fileID: 33554165768057024, guid: 70dce79a9c5aea54588da3fca8d7b92c, type: 3}
+  _spawnPoints:
+  - {fileID: 1427156960}
+  _maxAliveCount: 4
+  _spawnInterval: 3
+--- !u!4 &1186515682
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186515680}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1202656969
 GameObject:
   m_ObjectHideFlags: 0
@@ -7740,6 +7988,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3260054784527662626, guid: 94ec8ce897142944d89f34a92f07f108, type: 3}
   m_PrefabInstance: {fileID: 1210167844}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1227294602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1227294603}
+  m_Layer: 0
+  m_Name: SpawnPoint (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1227294603
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227294602}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.94551855, z: -0, w: 0.3255682}
+  m_LocalPosition: {x: 68.4, y: 2, z: 30.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 12952912}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1229470596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1229470597}
+  m_Layer: 0
+  m_Name: SpawnPoint (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1229470597
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1229470596}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.9848078, z: -0, w: 0.17364815}
+  m_LocalPosition: {x: 18.4, y: 0, z: 13.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 12952912}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1248103723
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8775,6 +9085,10 @@ PrefabInstance:
       value: EA_Swamp_Island_01b_PRE
       objectReference: {fileID: 0}
     - target: {fileID: 9129349511836780760, guid: 7e58494920677af469cf21a950c55ade, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129349511836780760, guid: 7e58494920677af469cf21a950c55ade, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
       objectReference: {fileID: 0}
@@ -8792,12 +9106,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 1353256691}
     m_Modifications:
     - target: {fileID: 1415507186035938, guid: 952f9c1c15edf1a45ab7acbf625d58e1, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1415507186035938, guid: 952f9c1c15edf1a45ab7acbf625d58e1, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1817355384373440, guid: 952f9c1c15edf1a45ab7acbf625d58e1, type: 3}
       propertyPath: m_Name
       value: EA_Bush1c_PRE
+      objectReference: {fileID: 0}
+    - target: {fileID: 1817355384373440, guid: 952f9c1c15edf1a45ab7acbf625d58e1, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1817355384373440, guid: 952f9c1c15edf1a45ab7acbf625d58e1, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -9627,6 +9949,37 @@ MonoBehaviour:
   _collider: {fileID: 1128803886}
   _range: 2
   _angle: 90
+--- !u!1 &1427156959
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1427156960}
+  m_Layer: 0
+  m_Name: SpawnPoint (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1427156960
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427156959}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.23974472, z: -0, w: 0.970836}
+  m_LocalPosition: {x: 35.8, y: 2.4, z: -13.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 12952912}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1430090919
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9642,6 +9995,10 @@ PrefabInstance:
     - target: {fileID: 8135380309732375705, guid: 3a962179c06dc744490fcc5e65aed055, type: 3}
       propertyPath: m_Name
       value: EA_Swamp_tree4_PRE
+      objectReference: {fileID: 0}
+    - target: {fileID: 8135380309732375705, guid: 3a962179c06dc744490fcc5e65aed055, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8135380309732375705, guid: 3a962179c06dc744490fcc5e65aed055, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -9703,6 +10060,10 @@ PrefabInstance:
     - target: {fileID: 4894870124239600735, guid: 7cfc4d4af6b65a34890cfc849a4c107e, type: 3}
       propertyPath: m_Name
       value: EA_Swamp_Mud_01b_PRE
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894870124239600735, guid: 7cfc4d4af6b65a34890cfc849a4c107e, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4894870124239600735, guid: 7cfc4d4af6b65a34890cfc849a4c107e, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -9898,6 +10259,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 821205441618508446, guid: 385681212d0794145b6415271847903b, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 821205441618508446, guid: 385681212d0794145b6415271847903b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
       objectReference: {fileID: 0}
@@ -9906,8 +10271,16 @@ PrefabInstance:
       value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 385681212d0794145b6415271847903b, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 385681212d0794145b6415271847903b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5654549773648680102, guid: 385681212d0794145b6415271847903b, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5654549773648680102, guid: 385681212d0794145b6415271847903b, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -10451,6 +10824,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1543842865}
   m_CullTransparentMesh: 1
+--- !u!1 &1569467106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1569467108}
+  - component: {fileID: 1569467107}
+  m_Layer: 0
+  m_Name: ZombieSpawner (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 1
+  m_IsActive: 1
+--- !u!114 &1569467107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569467106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8705536f334cf4674d2ce51fc361b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZombieSpawner
+  _zombiePrefab: {fileID: 33554165768057024, guid: 70dce79a9c5aea54588da3fca8d7b92c, type: 3}
+  _spawnPoints:
+  - {fileID: 2022394129}
+  - {fileID: 2009533290}
+  _maxAliveCount: 4
+  _spawnInterval: 3
+--- !u!4 &1569467108
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569467106}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1576294692 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5654549773648680102, guid: 385681212d0794145b6415271847903b, type: 3}
@@ -11269,7 +11692,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1399
+    m_Bits: 13312
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 70c5192c631e17c4c91e82517b91133d, type: 2}
   m_TargetDisplay: 0
@@ -11461,6 +11884,10 @@ PrefabInstance:
     - target: {fileID: 241167589100727950, guid: 6b58a8f3e290d1340ad324dc81ccfebf, type: 3}
       propertyPath: m_Name
       value: EA_Swamp_Wall_03d_PRE
+      objectReference: {fileID: 0}
+    - target: {fileID: 241167589100727950, guid: 6b58a8f3e290d1340ad324dc81ccfebf, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 241167589100727950, guid: 6b58a8f3e290d1340ad324dc81ccfebf, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -11919,6 +12346,10 @@ PrefabInstance:
       value: EA_Swamp_Wall_01alt_PRE
       objectReference: {fileID: 0}
     - target: {fileID: 377419405120293030, guid: 06514a16333bfa14092dafe96214b08e, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 377419405120293030, guid: 06514a16333bfa14092dafe96214b08e, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
       objectReference: {fileID: 0}
@@ -12367,12 +12798,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3814248811825909797, guid: 949073970b7252b40b6118458b9eaefa, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -3814248811825909797, guid: 949073970b7252b40b6118458b9eaefa, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 127
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 949073970b7252b40b6118458b9eaefa, type: 3}
       propertyPath: m_Name
       value: Swamp
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 949073970b7252b40b6118458b9eaefa, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 949073970b7252b40b6118458b9eaefa, type: 3}
       propertyPath: m_IsActive
@@ -12752,6 +13191,87 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2002342281}
   m_CullTransparentMesh: 1
+--- !u!1 &2006440471
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2006440473}
+  - component: {fileID: 2006440472}
+  m_Layer: 0
+  m_Name: ZombieSpawner (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 1
+  m_IsActive: 1
+--- !u!114 &2006440472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006440471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8705536f334cf4674d2ce51fc361b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZombieSpawner
+  _zombiePrefab: {fileID: 33554165768057024, guid: 70dce79a9c5aea54588da3fca8d7b92c, type: 3}
+  _spawnPoints:
+  - {fileID: 620427166}
+  - {fileID: 102493576}
+  _maxAliveCount: 4
+  _spawnInterval: 3
+--- !u!4 &2006440473
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006440471}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2009533289
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2009533290}
+  m_Layer: 0
+  m_Name: SpawnPoint (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2009533290
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009533289}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.50732094, z: -0, w: 0.8617572}
+  m_LocalPosition: {x: 68.5, y: 2, z: 5.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 12952912}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2015091093
 GameObject:
   m_ObjectHideFlags: 0
@@ -12968,6 +13488,37 @@ Transform:
   - {fileID: 546509151}
   - {fileID: 869641322}
   m_Father: {fileID: 1353256691}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2022394128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2022394129}
+  m_Layer: 0
+  m_Name: SpawnPoint (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2022394129
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022394128}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.57357645, z: -0, w: 0.8191521}
+  m_LocalPosition: {x: 74, y: 0, z: 6.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 12952912}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2035308355
 PrefabInstance:
@@ -13496,6 +14047,10 @@ PrefabInstance:
       value: EA_Swamp_Island_Small_05d_PRE
       objectReference: {fileID: 0}
     - target: {fileID: 5758641202865640169, guid: 89982ffbffea5e84ea9155500309f378, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5758641202865640169, guid: 89982ffbffea5e84ea9155500309f378, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
       objectReference: {fileID: 0}
@@ -13644,6 +14199,10 @@ PrefabInstance:
     - target: {fileID: 5306488983259582777, guid: 35f75b00a323be944bde46cc19d2a11a, type: 3}
       propertyPath: m_Name
       value: EA_Swamp_Clif_02a_PRE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5306488983259582777, guid: 35f75b00a323be944bde46cc19d2a11a, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5306488983259582777, guid: 35f75b00a323be944bde46cc19d2a11a, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -13870,12 +14429,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c8705536f334cf4674d2ce51fc361b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieSpawner
-  _zombiePrefab: {fileID: 33554165768057024, guid: 6e1c566062d440647b51bd2d7d4fd243, type: 3}
+  _zombiePrefab: {fileID: 33554165768057024, guid: 70dce79a9c5aea54588da3fca8d7b92c, type: 3}
   _spawnPoints:
   - {fileID: 154453461}
   - {fileID: 962514390}
   - {fileID: 827109317}
-  _maxAliveCount: 5
+  _maxAliveCount: 4
   _spawnInterval: 3
 --- !u!4 &2146118832
 Transform:
@@ -14035,7 +14594,7 @@ GameObject:
   - component: {fileID: 3054406208944973464}
   - component: {fileID: 16712641905353584}
   - component: {fileID: 6818354585471598636}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: EA_SwampWorld_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14111,3 +14670,7 @@ SceneRoots:
   - {fileID: 2146118832}
   - {fileID: 12952912}
   - {fileID: 1290835018}
+  - {fileID: 2006440473}
+  - {fileID: 77759235}
+  - {fileID: 1569467108}
+  - {fileID: 1186515682}
