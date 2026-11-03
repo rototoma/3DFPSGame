@@ -7,10 +7,11 @@ public class PlayerBombFire : MonoBehaviour
     private float _fireCharge = 0f;
     private bool _isCharging = false;
     private float _throwPower = 10f;
-    [SerializeField] private float _chargeMultiplier = 5f;
+    [SerializeField] private float _chargeMultiplier = 10f;
     [SerializeField] private int _maxBombs = 10;
 
     private int _currentBomb = 0;
+    private float _bombRigidbodyMass = 1f;
 
     [SerializeField] private Transform _firePoint;
     [SerializeField] private Bomb _bombPrefab;
@@ -19,12 +20,26 @@ public class PlayerBombFire : MonoBehaviour
     public int CurrentBomb => _currentBomb;
     public int MaxBombs => _maxBombs;
 
+    // 폭탄을 던질 준비(충전) 중인지. 궤적 미리보기가 표시 여부를 판단하는 데 쓴다.
+    public bool IsAiming => _isCharging
+                            && PlayerManager.Instance.PlayerWeaponMode == WeaponMode.Normal
+                            && _currentBomb < _maxBombs;
+    public Transform FirePoint => _firePoint;
+
+    // 지금 충전량으로 던졌을 때 폭탄의 초기 속도 (Impulse를 질량으로 나눈 값)
+    public Vector3 GetThrowVelocity()
+    {
+        float impulse = _fireCharge * _chargeMultiplier + _throwPower;
+        return impulse / _bombRigidbodyMass * Camera.main.transform.forward;
+    }
+
     // 옵저버: 폭탄 수가 바뀌면 (현재, 최대)를 구독자에게 알린다.
     public event Action<int, int> BombCountChanged;
 
     private void Start()
     {
         _animator = GetComponentInChildren<Animator>();
+        _bombRigidbodyMass = _bombPrefab.GetComponent<Rigidbody>().mass;
     }
 
     private void Update()
@@ -61,6 +76,11 @@ public class PlayerBombFire : MonoBehaviour
         BombCountChanged?.Invoke(_currentBomb, _maxBombs);
 
         Rigidbody rigidbody = bomb.GetComponent<Rigidbody>();
+
+        // 풀에서 재사용된 폭탄은 이전 비행/충돌의 속도와 회전이 남아 있으므로 초기화한 뒤 힘을 준다.
+        rigidbody.linearVelocity = Vector3.zero;
+        rigidbody.angularVelocity = Vector3.zero;
+
         rigidbody.AddForce((fireCharge * _chargeMultiplier + _throwPower) * Camera.main.transform.forward,
             ForceMode.Impulse);
     }

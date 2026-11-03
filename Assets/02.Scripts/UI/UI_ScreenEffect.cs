@@ -10,6 +10,9 @@ public class UI_ScreenEffect : MonoBehaviour
     [SerializeField] private float _flashTime = 0.06f;
     [SerializeField] private float _gradTime = 3f;
 
+    // 피격 연출 색상 (알파는 연출에 따라 코드에서 결정한다)
+    [SerializeField] private Color _hitColor = new Color(0.55f, 0.03f, 0.05f, 1f);
+
     private Coroutine _hitCoroutine;
 
     private void Awake()
@@ -41,7 +44,7 @@ public class UI_ScreenEffect : MonoBehaviour
         float timer = _flashTime;
         while (timer > 0)
         {
-            _hitScreen.color = new Color(1, 0, 0, 2 * timer);
+            _hitScreen.color = new Color(_hitColor.r, _hitColor.g, _hitColor.b, 2 * timer);
             timer -= Time.deltaTime;
             yield return null;
         }
@@ -60,7 +63,7 @@ public class UI_ScreenEffect : MonoBehaviour
         float timer = _gradTime;
         while (timer > 0)
         {
-            _hitScreen.color = new Color(1, 0, 0, (3 - timer) / 3);
+            _hitScreen.color = new Color(_hitColor.r, _hitColor.g, _hitColor.b, (3 - timer) / 3);
             timer -= Time.deltaTime;
             yield return null;
         }
