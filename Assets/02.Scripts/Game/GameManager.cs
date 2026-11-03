@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -6,6 +7,7 @@ public enum GameState
 {
     Ready,
     Playing,
+    Pause,
     GameOver,
 }
 
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _stateText;
     [SerializeField] private UI_ScreenEffect _screenEffect;
     [SerializeField] private Animator _playerAnimator;
+    [SerializeField] private GameObject _pausePanel;
 
     private void Awake()
     {
@@ -32,6 +35,32 @@ public class GameManager : MonoBehaviour
         _instance = this;
 
         StartCoroutine(StartSequence_Coroutine());
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_gameState == GameState.Playing)
+            {
+                _gameState = GameState.Pause;
+                Time.timeScale = 0;
+                _pausePanel.SetActive(true);
+                CursorManager.Instance.UnlockCursor();
+            }
+            else if (_gameState == GameState.Pause)
+            {
+                Resume();
+            }
+        }
+    }
+
+    public void Resume()
+    {
+        _gameState = GameState.Playing;
+        Time.timeScale = 1;
+        _pausePanel.SetActive(false);
+        CursorManager.Instance.LockCursor();
     }
 
     public void GameOver()
