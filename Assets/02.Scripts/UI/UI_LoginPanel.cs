@@ -24,20 +24,11 @@ public class UI_LoginPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _messageText; // 안내 글자
     [SerializeField] private string _gameSceneName = "GameScene"; // 로그인하면 불러올 씬
 
-    private Mode _mode = Mode.Login;
 
     private void Start()
     {
         _loginButton.onClick.AddListener(Login);
         _registerButton.onClick.AddListener(Register);
-        Refresh();
-    }
-
-    // 지금 모드에 맞는 칸과 버튼만 보여 준다.
-    private void Refresh()
-    {
-        bool isLogin = _mode == Mode.Login;
-        _loginButton.gameObject.SetActive(isLogin);
     }
 
 
@@ -69,7 +60,7 @@ public class UI_LoginPanel : MonoBehaviour
         string id = _idInput.text;
         string password = _passwordInput.text;
 
-        if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(password))
+        if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(password))
         {
             _messageText.text = "아이디와 비밀번호를 입력해 주세요.";
             return;
