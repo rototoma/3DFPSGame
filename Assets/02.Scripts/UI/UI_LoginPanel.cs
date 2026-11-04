@@ -6,12 +6,6 @@ using UnityEngine.UI;
 // 로그인 화면. 로그인 모드와 회원가입 모드를 바꾸고, 입력을 확인해 AccountStorage에 부탁한다.
 public class UI_LoginPanel : MonoBehaviour
 {
-    private enum Mode
-    {
-        Login, // 로그인
-        Register, // 회원가입
-    }
-
     [Header("입력 칸")]
     [SerializeField] private TMP_InputField _idInput;
     [SerializeField] private TMP_InputField _passwordInput;
