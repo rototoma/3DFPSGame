@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 // 로그인 화면. 로그인 모드와 회원가입 모드를 바꾸고, 입력을 확인해 AccountStorage에 부탁한다.
@@ -16,16 +15,17 @@ public class UI_LoginPanel : MonoBehaviour
 
     [Header("기타")]
     [SerializeField] private TextMeshProUGUI _messageText; // 안내 글자
-    [SerializeField] private string _gameSceneName = "GameScene"; // 로그인하면 불러올 씬
+    [SerializeField] private string _gameSceneName = "CullingTestScene"; // 로그인하면 불러올 씬
 
-    private AccountIdSpecification _idSpec;
-    private AccountPasswordSpecification _passwordSpec;
+    private AccountIdSpecification _idSpec = new AccountIdSpecification();
+    private AccountPasswordSpecification _passwordSpec = new AccountPasswordSpecification();
 
 
     private void Start()
     {
         _loginButton.onClick.AddListener(Login);
         _registerButton.onClick.AddListener(Register);
+        Debug.LogError("로그인씬");
     }
 
 
@@ -48,7 +48,7 @@ public class UI_LoginPanel : MonoBehaviour
             return;
         }
 
-        SceneManager.LoadScene(_gameSceneName);
+        SceneLoader.Load(_gameSceneName); // 로딩 화면을 거쳐서 넘어간다.
     }
 
     // 회원가입: 입력을 확인하고, 문제가 없으면 계정을 저장한 뒤 로그인 모드로 돌아간다.
